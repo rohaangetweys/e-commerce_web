@@ -1,3 +1,4 @@
+import FeaturedSection from "@/components/FeatuedSection";
 import Image from "next/image";
 import { FaSearch } from "react-icons/fa";
 import { MdKeyboardArrowDown } from "react-icons/md";
@@ -19,14 +20,32 @@ export default function Home() {
     "Clearance"
   ];
 
+  const featuredBrand = [
+    { imgSrc: "/brand1.png", label: "none" },
+    { imgSrc: "/brand2.png", label: "none" },
+    { imgSrc: "/brand3.png", label: "none" },
+    { imgSrc: "/brand4.png", label: "none" },
+    { imgSrc: "/brand5.png", label: "none" },
+    { imgSrc: "/brand6.png", label: "none" },
+    { imgSrc: "/brand7.png", label: "none" },
+    { imgSrc: "/brand8.png", label: "none" },
+  ];
+
+  const categories2 = [
+    { imgSrc: "/category1.png", label: "Laptops" },
+    { imgSrc: "/category2.png", label: "PC Gaming" },
+    { imgSrc: "/category3.png", label: "Headphones" },
+    { imgSrc: "/category4.png", label: "Monitors" },
+  ];
+
 
   return (
-    <div className="h-96 w-full bg-transparent text-black pt-[92px] px-2">
+    <div className="h-full w-full bg-transparent text-black pt-[92px] px-6">
 
       {/* search section */}
       <div className="w-full flex items-center px-8 h-[75px] bg-[#1ABA1A] rounded-xl justify-between">
         <div className="bg-white h-11 flex items-center rounded-full w-1/3 px-4">
-          <div className="w-58 flex items-center">
+          <div className="w-60 flex items-center">
             All Categories <MdKeyboardArrowDown className="ml-2 translate-y-1 inline-block mb-1" />
           </div>
 
@@ -150,6 +169,12 @@ export default function Home() {
             <button className="w-[90px] h-[34px] relative z-10 text-xs bg-[#333333] text-white rounded-xl mb-5">BUY NOW</button>
           </div>
         </div>
+      </div>
+
+      {/* section 2 */}
+      <div className="flex gap-4 w-full h-full py-4">
+        <FeaturedSection label={false} title="FEATURED BRANDS" items={featuredBrand} />
+        <FeaturedSection label={true} title="TOP CATEGORIES" items={categories2} />
       </div>
 
     </div>
