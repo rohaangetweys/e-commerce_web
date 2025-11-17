@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { FaSearch } from "react-icons/fa";
 import { MdKeyboardArrowDown } from "react-icons/md";
 
@@ -20,7 +21,7 @@ export default function Home() {
 
 
   return (
-    <div className="h-96 w-full bg-transparent text-black pt-[82px]">
+    <div className="h-96 w-full bg-transparent text-black pt-[92px] px-2">
 
       {/* search section */}
       <div className="w-full flex items-center px-8 h-[75px] bg-[#1ABA1A] rounded-xl justify-between">
@@ -39,7 +40,7 @@ export default function Home() {
       </div>
 
       {/* section 1 */}
-      <div className="w-full mt-4 h-[492px] flex items-center justify-between">
+      <div className="w-full mt-4 h-[492px] flex items-center justify-between gap-4">
         <div className="py-5 px-14 rounded-xl w-1/4 bg-white">
           <h3 className="text-[#F1352B] text-sm font-bold">SALE 40% OFF</h3>
           {typeList.slice(1).map((type, index) => (
@@ -49,9 +50,106 @@ export default function Home() {
           ))}
         </div>
 
-        <div className="h-full w-1/2 bg-black"></div>
+        <div className="h-full flex flex-col w-1/2 gap-4">
+          {/* card1 */}
+          <div className="w-full h-2/3 py-10 px-15 relative overflow-hidden flex flex-col justify-between rounded-xl">
+            <Image
+              src="/headphones.png"
+              alt="Homepage Banner"
+              fill
+              className="object-cover"
+            />
 
-        <div></div>
+            <h1 className="relative flex flex-col z-10 text-white text-4xl font-bold">
+              Noise Cancelling
+              <span className="font-thin text-2xl">Headphones</span>
+            </h1>
+
+            <p className="text-xs ml-4 z-10 relative text-white">
+              Boso Over-Ear Headphone <br />
+              Wifi, Voice Assistant, <br />
+              Low latency game mode
+            </p>
+
+            <button className="w-[90px] h-[34px] relative z-10 text-xs bg-white rounded-xl">BUY NOW</button>
+          </div>
+
+          <div className="flex gap-4 h-1/3 w-full">
+            {/* card2 */}
+            <div className="w-1/2 h-full p-5 relative overflow-hidden flex flex-col justify-between rounded-xl">
+              <Image
+                src="/playstation.png"
+                alt="Homepage Banner"
+                fill
+                className="object-cover"
+              />
+
+              <h1 className="relative z-10 text-black text-[15px] font-semibold">
+                Sono Playgo 5 <br />
+                from $569
+              </h1>
+
+              <button className="w-[90px] h-[34px] relative z-10 text-xs bg-black text-white rounded-xl">BUY NOW</button>
+            </div>
+
+            {/* card3 */}
+            <div className="w-1/2 h-full p-5 relative overflow-hidden flex flex-col justify-between rounded-xl">
+              <Image
+                src="/keyboard.png"
+                alt="Homepage Banner"
+                fill
+                className="object-cover"
+              />
+
+              <h1 className="relative z-10 text-white text-[15px] font-semibold">
+                Logitek Bluetooth <br />
+                <span className="text-[#FFC107]">Keyboard</span>
+              </h1>
+
+              <button className="w-[90px] h-[34px] relative z-10 text-xs bg-black text-white rounded-xl">BUY NOW</button>
+            </div>
+          </div>
+        </div>
+
+        <div className="h-full w-1/4 gap-4 flex flex-col">
+          <div className="w-full h-1/2 p-5 items-end relative overflow-hidden flex flex-col justify-between rounded-xl">
+            <Image
+              src="/watch.png"
+              alt="Homepage Banner"
+              fill
+              className="object-cover"
+            />
+
+            <h1 className="relative z-10 text-black text-[10px] font-semibold">
+              XOMIA
+            </h1>
+
+            <h2 className="relative z-10 text-black text-xl font-bold">
+              Sport Water <br />
+              Resistance <br />
+              Watch
+            </h2>
+
+            <button className="w-[90px] h-[34px] relative z-10 text-xs bg-[#333333] text-white rounded-xl mb-5">BUY NOW</button>
+          </div>
+
+          <div className="w-full h-1/2 p-5 relative overflow-hidden flex flex-col justify-between rounded-xl">
+            <Image
+              src="/camera.png"
+              alt="Homepage Banner"
+              fill
+              className="object-cover"
+            />
+
+            <h1 className="relative z-10 text-white text-2xl uppercase">
+              <span className="font-bold">OKODo</span><br />
+              hero 11+ <br />
+              black
+            </h1>
+
+            <button className="w-[90px] h-[34px] relative z-10 text-xs bg-[#333333] text-white rounded-xl mb-5">BUY NOW</button>
+          </div>
+        </div>
       </div>
 
     </div>
