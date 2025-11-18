@@ -1,8 +1,5 @@
 import Image from 'next/image'
-import React from 'react'
 import Button from '../common/Button'
-import { MdKeyboardArrowDown } from 'react-icons/md';
-import { FaSearch } from 'react-icons/fa';
 import SearchSection from '../common/SearchSection';
 
 export default function HeroSection() {
@@ -15,8 +12,8 @@ export default function HeroSection() {
     return (
         <>
             <SearchSection />
-            <div className="w-full mt-4 flex flex-col lg:flex-row items-center justify-between gap-4 h-auto lg:h-[492px]">
-                <div className="py-5 px-10 rounded-xl w-full lg:w-1/4 bg-white">
+            <div className="w-full mt-4 md:h-[492px] flex max-md:flex-col items-center justify-between gap-4">
+                <div className="py-5 px-14 rounded-xl w-1/4 bg-white max-md:hidden">
                     <h3 className="text-[#F1352B] text-sm font-bold">SALE 40% OFF</h3>
                     {typeList.slice(1).map((type, index) => (
                         <div key={index} className="mt-4">
@@ -25,9 +22,9 @@ export default function HeroSection() {
                     ))}
                 </div>
 
-                <div className="flex flex-col w-full lg:w-1/2 gap-4">
+                <div className="h-full flex flex-col md:w-1/2 w-full gap-4">
                     {/* card1 */}
-                    <div className="w-full h-2/3 py-10 px-15 relative overflow-hidden flex flex-col justify-between rounded-xl">
+                    <div className="w-full md:h-2/3 h-full py-10 px-15 relative overflow-hidden flex flex-col justify-between rounded-xl">
                         <Image
                             src="/headphones.png"
                             alt="Homepage Banner"
@@ -86,7 +83,7 @@ export default function HeroSection() {
                     </div>
                 </div>
 
-                <div className="w-full lg:w-1/4 gap-4 flex flex-col">
+                <div className="h-full md:w-1/4 w-full gap-4 flex flex-col">
                     <div className="w-full h-1/2 p-5 items-end relative overflow-hidden flex flex-col justify-between rounded-xl">
                         <Image
                             src="/watch.png"
