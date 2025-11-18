@@ -1,9 +1,8 @@
-import React from 'react'
 import { IoMdHeartEmpty } from 'react-icons/io'
 import { IoBagCheckOutline } from 'react-icons/io5'
 import { RiShoppingCartLine } from 'react-icons/ri'
 
-export default function Header() {
+export default function Header({ isAuthPage }: { isAuthPage?: boolean }) {
     const navs: { name: string; link: string }[] = [
         { name: 'HOME', link: '/' },
         { name: 'PAGES', link: '/pages' },
@@ -26,26 +25,36 @@ export default function Header() {
                     </h1>
                 </div>
 
-                <nav>
-                    <ul className='flex gap-8 text-black text-sm font-semibold'>
-                        {navs.map((nav) => (
-                            <li key={nav.name} className='hover:text-green-600 cursor-pointer'>
-                                {nav.name}
-                            </li>
-                        ))}
-                    </ul>
-                </nav>
+                {
+                    isAuthPage ? null : (
+                        <nav>
+                            <ul className='flex gap-8 text-black text-sm font-semibold'>
+                                {navs.map((nav) => (
+                                    <li key={nav.name} className='hover:text-green-600 cursor-pointer'>
+                                        {nav.name}
+                                    </li>
+                                ))}
+                            </ul>
+                        </nav>
+                    )
+                }
 
                 <div className='flex items-center gap-3'>
-                    <div className='w-10 h-10 bg-[#EBEEF6] rounded-full flex justify-center items-center text-black'>
-                        <IoMdHeartEmpty />
-                    </div>
-                    <div className='w-10 h-10 bg-[#EBEEF6] rounded-full flex justify-center items-center text-black'>
-                        <RiShoppingCartLine />
-                    </div>
-                    <div className='w-10 h-10 bg-[#EBEEF6] rounded-full flex justify-center items-center text-black'>
-                        <IoBagCheckOutline />
-                    </div>
+                    {
+                        isAuthPage ? null : (
+                            <>
+                                <div className='w-10 h-10 bg-[#EBEEF6] rounded-full flex justify-center items-center text-black'>
+                                    <IoMdHeartEmpty />
+                                </div>
+                                <div className='w-10 h-10 bg-[#EBEEF6] rounded-full flex justify-center items-center text-black'>
+                                    <RiShoppingCartLine />
+                                </div>
+                                <div className='w-10 h-10 bg-[#EBEEF6] rounded-full flex justify-center items-center text-black'>
+                                    <IoBagCheckOutline />
+                                </div>
+                            </>
+                        )
+                    }
 
                     <div>
                         <h2 className='text-sm text-black flex flex-col font-semibold'>
@@ -54,13 +63,17 @@ export default function Header() {
                         </h2>
                     </div>
 
-                    <div className='flex gap-2 ml-4'>
-                        <div className='w-10 h-10 bg-[#EBEEF6] rounded-full flex justify-center items-center text-black'></div>
-                        <h2 className='text-sm text-black flex flex-col font-semibold'>
-                            <span className='text-xs text-[#666666] font-thin'>CART</span>
-                            $50, 000
-                        </h2>
-                    </div>
+                    {
+                        isAuthPage ? null : (
+                            <div className='flex gap-2 ml-4'>
+                                <div className='w-10 h-10 bg-[#EBEEF6] rounded-full flex justify-center items-center text-black'></div>
+                                <h2 className='text-sm text-black flex flex-col font-semibold'>
+                                    <span className='text-xs text-[#666666] font-thin'>CART</span>
+                                    $50, 000
+                                </h2>
+                            </div>
+                        )
+                    }
                 </div>
             </div>
         </header>

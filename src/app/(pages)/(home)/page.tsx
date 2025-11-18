@@ -26,7 +26,7 @@ const categories = [
 
 export default function Home() {
   return (
-    <div className="h-full w-full bg-transparent text-black pt-[92px] px-6">
+    <div className="h-full w-full bg-transparent text-black">
       <HeroSection />
       <div className="flex gap-4 w-full h-full py-4">
         <FeaturedSection label={false} title="FEATURED BRANDS" items={featuredBrand} />
