@@ -11,7 +11,7 @@ export default function BestSellerSection() {
             </div>
 
             <div className="w-full h-full overflow-x-auto whitespace-nowrap no-scrollbar">
-                <div className="flex gap-6 w-max">
+                <div className="flex gap-6 py-3 px-2 w-max">
                     {[...Array(6)].map((_, index) => (
                         <ProductCard
                             key={index}

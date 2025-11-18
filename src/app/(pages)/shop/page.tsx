@@ -1,9 +1,9 @@
 import ProductCard from '@/components/cards/ProductCard'
+import Banner from '@/components/common/Banner'
+import Button from '@/components/common/Button'
 import SearchSection from '@/components/common/SearchSection'
 import BrandNewSection from '@/components/home/BrandNewSection'
-import Link from 'next/link'
-import React from 'react'
-import { IoIosArrowForward } from 'react-icons/io'
+
 
 const products = [
     {
@@ -141,16 +141,7 @@ export default function ShopPage() {
         <div className="h-full w-full bg-transparent text-black">
             <SearchSection />
 
-            {/* Breadcrumb */}
-            <div className='h-20 w-full bg-white rounded-2xl mt-6 flex items-center px-8 gap-2'>
-                <Link href='/' className='text-sm text-[#999999] hover:underline font-semibold tracking-wide'>
-                    Home
-                </Link>
-                <IoIosArrowForward className='text-[#999999]' />
-                <Link href='/shop' className='text-sm text-[#999999] hover:underline font-semibold tracking-wide'>
-                    Shop
-                </Link>
-            </div>
+            <Banner />
 
             <BrandNewSection />
 
@@ -188,9 +179,9 @@ export default function ShopPage() {
 
                 {/* Load More Button */}
                 <div className="flex justify-center mt-8">
-                    <button className="bg-[#1ABA1A] text-white px-8 py-3 rounded-full font-semibold hover:bg-green-600 transition-colors text-sm">
-                        LOAD MORE PRODUCTS
-                    </button>
+                    <Button variant="success" size="lg" type="submit" className='mb-4 '>
+                        Load More Products
+                    </Button>
                 </div>
             </div>
         </div>
