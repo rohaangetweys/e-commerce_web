@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import Header from "@/components/common/Header";
 
 const inter = Inter({
   subsets: ['latin'],
@@ -20,8 +19,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="bg-[#EBEEF6]">
-      <body className={`${inter.className} bg-[#EBEEF6]`}>
-        <Header />
+      <body className={`${inter.className} bg-[#EBEEF6] flex flex-col min-h-screen items-center`}>
         {children}
       </body>
     </html>

@@ -4,9 +4,16 @@ import { IoBagCheckOutline } from 'react-icons/io5'
 import { RiShoppingCartLine } from 'react-icons/ri'
 
 export default function Header() {
+    const navs: { name: string; link: string }[] = [
+        { name: 'HOME', link: '/' },
+        { name: 'PAGES', link: '/pages' },
+        { name: 'PRODUCTS', link: '/products' },
+        { name: 'CONTACT', link: '/contact' },
+    ]
+
     return (
-        <header className='h-[82px] w-full bg-white flex flex-col justify-between py-4 px-8 rounded-b-xl fixed top-0 z-50'>
-            <div className='h-[50px] flex justify-between items-center'>
+        <header className='h-[82px] w-full bg-white flex flex-col justify-center items-center py-4 fixed top-0 z-50'>
+            <div className='h-[50px] px-6 flex justify-between items-center max-w-screen-2xl w-full'>
                 <div className='flex'>
                     <div className="text-white w-10 h-10 flex justify-center items-center bg-[#1ABA1A] rounded-2xl">
                         <span className="inline-block -rotate-90 translate-y-2 font-bold">
@@ -21,10 +28,11 @@ export default function Header() {
 
                 <nav>
                     <ul className='flex gap-8 text-black text-sm font-semibold'>
-                        <li>HOME</li>
-                        <li>PAGES</li>
-                        <li>PRODUCTS</li>
-                        <li>CONTACT</li>
+                        {navs.map((nav) => (
+                            <li key={nav.name} className='hover:text-green-600 cursor-pointer'>
+                                {nav.name}
+                            </li>
+                        ))}
                     </ul>
                 </nav>
 
