@@ -3,6 +3,7 @@ import React from 'react'
 import Button from '../common/Button'
 import { MdKeyboardArrowDown } from 'react-icons/md';
 import { FaSearch } from 'react-icons/fa';
+import SearchSection from '../common/SearchSection';
 
 export default function HeroSection() {
     const typeList: String[] = [
@@ -13,20 +14,7 @@ export default function HeroSection() {
 
     return (
         <>
-            {/* Search Section */}
-            <div className="w-full flex items-center px-8 h-[75px] bg-[#1ABA1A] rounded-xl justify-between">
-                <div className="bg-white h-11 flex items-center rounded-full w-1/3 px-4">
-                    <div className="w-60 flex items-center">
-                        All Categories <MdKeyboardArrowDown className="ml-2 translate-y-1 inline-block mb-1" />
-                    </div>
-                    <input type="text" className="h-full w-full border-l px-4 outline-none" placeholder="Search any product..." />
-                    <FaSearch className="text-gray-500 text-xl ml-auto" />
-                </div>
-                <p className="text-white text-sm">FREE SHIPPING OVER $199</p>
-                <p className="text-white text-sm">30 DAYS MONEY BACK</p>
-                <p className="text-white text-sm">100% SECURE PAYMENT</p>
-            </div>
-
+            <SearchSection />
             <div className="w-full mt-4 h-[492px] flex items-center justify-between gap-4">
                 <div className="py-5 px-14 rounded-xl w-1/4 bg-white">
                     <h3 className="text-[#F1352B] text-sm font-bold">SALE 40% OFF</h3>

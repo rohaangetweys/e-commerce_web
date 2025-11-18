@@ -18,7 +18,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
     inStock = true
 }) => {
     return (
-        <div className="min-w-[230px] max-w-[230px] bg-gray-50 rounded-xl p-4 shadow-sm hover:shadow-md transition">
+        <div className="min-w-[230px] max-w-[230px] bg-gray-100 cursor-pointer hover:scale-105 hover:shadow-2xl rounded-xl p-4 shadow-sm hover:border border-green-400 transition">
             <div className="w-full h-[200px] relative rounded-lg overflow-hidden bg-white flex items-center justify-center">
                 <Image
                     src={image}

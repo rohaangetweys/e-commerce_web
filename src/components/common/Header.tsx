@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { IoMdHeartEmpty } from 'react-icons/io'
 import { IoBagCheckOutline } from 'react-icons/io5'
 import { RiShoppingCartLine } from 'react-icons/ri'
@@ -5,7 +6,7 @@ import { RiShoppingCartLine } from 'react-icons/ri'
 export default function Header({ isAuthPage }: { isAuthPage?: boolean }) {
     const navs: { name: string; link: string }[] = [
         { name: 'HOME', link: '/' },
-        { name: 'PAGES', link: '/pages' },
+        { name: 'SHOP', link: '/shop' },
         { name: 'PRODUCTS', link: '/products' },
         { name: 'CONTACT', link: '/contact' },
     ]
@@ -31,7 +32,9 @@ export default function Header({ isAuthPage }: { isAuthPage?: boolean }) {
                             <ul className='flex gap-8 text-black text-sm font-semibold'>
                                 {navs.map((nav) => (
                                     <li key={nav.name} className='hover:text-green-600 cursor-pointer'>
-                                        {nav.name}
+                                        <Link href={nav.link} prefetch>
+                                            {nav.name}
+                                        </Link>
                                     </li>
                                 ))}
                             </ul>
