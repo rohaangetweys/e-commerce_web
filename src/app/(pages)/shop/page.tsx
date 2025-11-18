@@ -140,14 +140,9 @@ export default function ShopPage() {
     return (
         <div className="h-full w-full bg-transparent text-black">
             <SearchSection />
-
             <Banner />
-
             <BrandNewSection />
-
-            {/* Main Shop Section */}
             <div className="bg-white rounded-2xl w-full mt-6 px-8 py-8">
-                {/* Header Section */}
                 <div className="flex justify-between items-center mb-6">
                     <h2 className="text-lg font-semibold cursor-default">ALL PRODUCTS</h2>
                     <div className="flex items-center gap-4">
@@ -163,7 +158,6 @@ export default function ShopPage() {
                     </div>
                 </div>
 
-                {/* Products Grid */}
                 <div className="flex flex-wrap w-full gap-y-6 justify-between">
                     {products.map((product) => (
                         <ProductCard
@@ -177,7 +171,6 @@ export default function ShopPage() {
                     ))}
                 </div>
 
-                {/* Load More Button */}
                 <div className="flex justify-center mt-8">
                     <Button variant="success" size="lg" type="submit" className='mb-4 '>
                         Load More Products
