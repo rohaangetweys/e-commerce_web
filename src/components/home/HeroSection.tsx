@@ -15,8 +15,8 @@ export default function HeroSection() {
     return (
         <>
             <SearchSection />
-            <div className="w-full mt-4 h-[492px] flex items-center justify-between gap-4">
-                <div className="py-5 px-14 rounded-xl w-1/4 bg-white">
+            <div className="w-full mt-4 flex flex-col lg:flex-row items-center justify-between gap-4 h-auto lg:h-[492px]">
+                <div className="py-5 px-10 rounded-xl w-full lg:w-1/4 bg-white">
                     <h3 className="text-[#F1352B] text-sm font-bold">SALE 40% OFF</h3>
                     {typeList.slice(1).map((type, index) => (
                         <div key={index} className="mt-4">
@@ -25,7 +25,7 @@ export default function HeroSection() {
                     ))}
                 </div>
 
-                <div className="h-full flex flex-col w-1/2 gap-4">
+                <div className="flex flex-col w-full lg:w-1/2 gap-4">
                     {/* card1 */}
                     <div className="w-full h-2/3 py-10 px-15 relative overflow-hidden flex flex-col justify-between rounded-xl">
                         <Image
@@ -86,7 +86,7 @@ export default function HeroSection() {
                     </div>
                 </div>
 
-                <div className="h-full w-1/4 gap-4 flex flex-col">
+                <div className="w-full lg:w-1/4 gap-4 flex flex-col">
                     <div className="w-full h-1/2 p-5 items-end relative overflow-hidden flex flex-col justify-between rounded-xl">
                         <Image
                             src="/watch.png"

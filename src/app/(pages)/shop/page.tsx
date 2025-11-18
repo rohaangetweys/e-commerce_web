@@ -142,23 +142,41 @@ export default function ShopPage() {
             <SearchSection />
             <Banner />
             <BrandNewSection />
-            <div className="bg-white rounded-2xl w-full mt-6 px-8 py-8">
-                <div className="flex justify-between items-center mb-6">
-                    <h2 className="text-lg font-semibold cursor-default">ALL PRODUCTS</h2>
-                    <div className="flex items-center gap-4">
-                        <select className="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#1ABA1A]">
+
+            <div className="
+                bg-white rounded-2xl w-full mt-6 px-8 py-8
+                max-[1000px]:px-4 max-[1000px]:py-6
+            ">
+                <div className="
+                    flex justify-between items-center mb-6
+                    max-[1000px]:flex-col max-[1000px]:items-start max-[1000px]:gap-3
+                ">
+                    <h2 className="text-lg font-semibold cursor-default max-[1000px]:text-base">
+                        ALL PRODUCTS
+                    </h2>
+
+                    <div className="flex items-center gap-4 max-[1000px]:w-full max-[1000px]:justify-between">
+                        <select className="
+                            border border-gray-300 rounded-lg px-3 py-2 text-sm 
+                            focus:outline-none focus:ring-2 focus:ring-[#1ABA1A]
+                            max-[1000px]:text-xs max-[1000px]:px-2 max-[1000px]:py-1.5
+                        ">
                             <option>Sort by: Featured</option>
                             <option>Price: Low to High</option>
                             <option>Price: High to Low</option>
                             <option>Newest First</option>
                         </select>
-                        <div className="text-sm text-gray-600">
+
+                        <div className="text-sm text-gray-600 max-[1000px]:text-xs">
                             {products.length} products
                         </div>
                     </div>
                 </div>
 
-                <div className="flex flex-wrap w-full gap-y-6 justify-between">
+                <div className="
+                    flex flex-wrap w-full gap-y-6 justify-between
+                    max-[1000px]:justify-center max-[1000px]:gap-x-4
+                ">
                     {products.map((product) => (
                         <ProductCard
                             key={product.id}
@@ -172,11 +190,16 @@ export default function ShopPage() {
                 </div>
 
                 <div className="flex justify-center mt-8">
-                    <Button variant="success" size="lg" type="submit" className='mb-4 '>
+                    <Button
+                        variant="success"
+                        size="lg"
+                        type="submit"
+                        className="mb-4 max-[1000px]:text-sm max-[1000px]:px-5 max-[1000px]:py-2"
+                    >
                         Load More Products
                     </Button>
                 </div>
             </div>
         </div>
-    )
+    );
 }

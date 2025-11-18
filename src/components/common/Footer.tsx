@@ -65,10 +65,9 @@ export default function Footer() {
     return (
         <footer className="bg-white w-full pt-20 flex justify-center items-center mt-20">
             <div className="px-6 max-w-screen-2xl w-full">
+                <div className="flex justify-between flex-col md:flex-row gap-12 md:gap-0">
 
-                <div className="flex justify-between">
-
-                    <div className="flex flex-col gap-7">
+                    <div className="flex flex-col gap-7 w-full md:w-auto">
                         <h2 className="text-lg font-semibold cursor-default">Swoo - 1st NYC tech online market</h2>
 
                         <div className="flex flex-col">
@@ -95,7 +94,7 @@ export default function Footer() {
                     {
                         footerData.map((section) => {
                             return (
-                                <div key={section.title}>
+                                <div key={section.title} className="w-full md:w-auto">
                                     <h2 className="text-lg font-semibold cursor-default">{section.title}</h2>
                                     <div className="flex flex-col gap-4 mt-7">
                                         {section.items.map((link) => {

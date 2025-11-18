@@ -28,7 +28,7 @@ export default function Home() {
   return (
     <div className="h-full w-full bg-transparent text-black">
       <HeroSection />
-      <div className="flex gap-4 w-full h-full py-4">
+      <div className="flex gap-4 w-full h-full py-4 max-md:flex-col">
         <FeaturedSection label={false} title="FEATURED BRANDS" items={featuredBrand} />
         <FeaturedSection label={true} title="TOP CATEGORIES" items={categories} />
       </div>
