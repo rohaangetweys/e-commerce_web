@@ -23,7 +23,7 @@ export default function HeroSection() {
                 </div>
 
                 <div className="h-full flex flex-col md:w-1/2 w-full gap-4">
-                    <div className="w-full md:h-2/3 h-full py-10 px-15 relative overflow-hidden flex flex-col justify-between rounded-xl">
+                    <div className="w-full md:h-2/3 h-full py-10 px-15 relative overflow-hidden flex flex-col justify-between rounded-xl max-md:px-8 max-md:gap-4">
                         <Image
                             src="/headphones.png"
                             alt="Homepage Banner"
@@ -31,12 +31,12 @@ export default function HeroSection() {
                             className="object-cover"
                         />
 
-                        <h1 className="relative flex flex-col z-10 text-white text-4xl font-bold">
+                        <h1 className="relative flex flex-col z-10 text-white text-4xl font-bold max-md:text-3xl">
                             Noise Cancelling
-                            <span className="font-thin text-2xl">Headphones</span>
+                            <span className="font-thin text-2xl max-md:text-xl">Headphones</span>
                         </h1>
 
-                        <p className="text-xs ml-4 z-10 relative text-white">
+                        <p className="text-xs ml-4 z-10 relative text-white max-md:text-[10px]">
                             Boso Over-Ear Headphone <br />
                             Wifi, Voice Assistant, <br />
                             Low latency game mode
@@ -46,7 +46,7 @@ export default function HeroSection() {
                     </div>
 
                     <div className="flex gap-4 h-1/3 w-full">
-                        <div className="w-1/2 h-full p-5 relative overflow-hidden flex flex-col justify-between rounded-xl">
+                        <div className="w-1/2 h-full p-5 relative overflow-hidden flex flex-col justify-between rounded-xl max-md:gap-4">
                             <Image
                                 src="/playstation.png"
                                 alt="Homepage Banner"
@@ -62,7 +62,7 @@ export default function HeroSection() {
                             <Button variant="secondary" size="sm" className="relative z-10">BUY NOW</Button>
                         </div>
 
-                        <div className="w-1/2 h-full p-5 relative overflow-hidden flex flex-col justify-between rounded-xl">
+                        <div className="w-1/2 h-full p-5 relative overflow-hidden flex flex-col justify-between rounded-xl max-md:gap-4">
                             <Image
                                 src="/keyboard.png"
                                 alt="Homepage Banner"
@@ -81,7 +81,7 @@ export default function HeroSection() {
                 </div>
 
                 <div className="h-full md:w-1/4 w-full gap-4 flex flex-col">
-                    <div className="w-full h-1/2 p-5 items-end relative overflow-hidden flex flex-col justify-between rounded-xl">
+                    <div className="w-full h-1/2 p-5 items-end relative overflow-hidden flex flex-col justify-between rounded-xl max-md:gap-4">
                         <Image
                             src="/watch.png"
                             alt="Homepage Banner"
@@ -102,7 +102,7 @@ export default function HeroSection() {
                         <Button variant="dark" size="sm" className="relative z-10 mb-5">BUY NOW</Button>
                     </div>
 
-                    <div className="w-full h-1/2 p-5 relative overflow-hidden flex flex-col justify-between rounded-xl">
+                    <div className="w-full h-1/2 p-5 relative overflow-hidden flex flex-col justify-between rounded-xl max-md:gap-4">
                         <Image
                             src="/camera.png"
                             alt="Homepage Banner"
