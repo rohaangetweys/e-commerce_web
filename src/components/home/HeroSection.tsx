@@ -17,7 +17,7 @@ export default function HeroSection() {
                     <h3 className="text-[#F1352B] text-sm font-bold">SALE 40% OFF</h3>
                     {typeList.slice(1).map((type, index) => (
                         <div key={index} className="mt-4">
-                            <p className="text-sm text-black hover:text-[#F1352B] cursor-pointer">{type}</p>
+                            <p className={`text-sm text-black ${index <= 2 ? "hover:text-[#F1352B] cursor-pointer" : "cursor-default"}`}>{type}</p>
                         </div>
                     ))}
                 </div>

@@ -5,6 +5,7 @@ import { IoMdHeartEmpty } from 'react-icons/io';
 import { IoBagCheckOutline } from 'react-icons/io5';
 import { RiShoppingCartLine } from 'react-icons/ri';
 import { useState } from 'react';
+import { FaRegUser, FaUser } from 'react-icons/fa';
 
 export default function Header({ isAuthPage }: { isAuthPage?: boolean }) {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -62,13 +63,10 @@ export default function Header({ isAuthPage }: { isAuthPage?: boolean }) {
                 <div className='flex items-center gap-3 max-[1000px]:hidden'>
                     {!isAuthPage && (
                         <>
-                            <div className='w-10 h-10 bg-[#EBEEF6] rounded-full flex justify-center items-center text-black'>
-                                <IoMdHeartEmpty />
-                            </div>
-                            <Link href={'/cart'} className='w-10 h-10 bg-[#EBEEF6] rounded-full flex justify-center items-center text-black'>
+                            <Link href={'/cart'} className='hover:scale-105 transition w-10 h-10 bg-[#EBEEF6] rounded-full flex justify-center items-center text-black'>
                                 <RiShoppingCartLine />
                             </Link>
-                            <Link href={'/checkout'} className='w-10 h-10 bg-[#EBEEF6] rounded-full flex justify-center items-center text-black'>
+                            <Link href={'/checkout'} className='hover:scale-105 transition w-10 h-10 bg-[#EBEEF6] rounded-full flex justify-center items-center text-black'>
                                 <IoBagCheckOutline />
                             </Link>
                         </>
@@ -76,77 +74,81 @@ export default function Header({ isAuthPage }: { isAuthPage?: boolean }) {
                     <div className="max-[768px]:hidden">
                         <h2 className='text-sm text-black flex flex-col font-semibold'>
                             <span className='text-xs text-[#666666] font-thin'>WELCOME</span>
-                            <Link href={'/login'}>
+                            <Link href={'/login'} className='hover:underline transition'>
                                 LOG IN / REGISTER
                             </Link>
                         </h2>
                     </div>
                     {!isAuthPage && (
                         <div className='flex gap-2 ml-4 max-[768px]:hidden'>
-                            <div className='w-10 h-10 bg-[#EBEEF6] rounded-full flex justify-center items-center text-black'></div>
+                            <Link href={'/profile'} className='hover:scale-105 transition w-10 h-10 bg-[#EBEEF6] rounded-full flex justify-center items-center text-black'>
+                                <FaRegUser />
+                            </Link>
                             <h2 className='text-sm text-black flex flex-col font-semibold'>
                                 <span className='text-xs text-[#666666] font-thin'>CART</span>
                                 $50, 000
                             </h2>
                         </div>
                     )}
-                </div>
+            </div>
 
-                {isMenuOpen && (
-                    <div className="fixed top-[82px] left-0 w-full bg-white shadow-lg max-[1000px]:block hidden">
-                        <nav className="p-6">
-                            <ul className='flex flex-col gap-4 text-sm font-semibold'>
-                                {navs.map((nav) => (
-                                    <li
-                                        key={nav.name}
-                                        className={`hover:text-green-600 cursor-pointer py-2 border-b ${pathname === nav.link ? 'text-green-600' : 'text-black'
-                                            }`}
-                                    >
-                                        <Link href={nav.link} prefetch onClick={() => setIsMenuOpen(false)}>
-                                            {nav.name}
-                                        </Link>
-                                    </li>
-                                ))}
-                            </ul>
-                        </nav>
-                        <div className='p-6 border-t'>
-                            <div className='flex flex-col gap-4'>
-                                <div className='flex items-center gap-4'>
-                                    <div className='w-10 h-10 bg-[#EBEEF6] rounded-full flex justify-center items-center text-black'>
-                                        <IoMdHeartEmpty />
-                                    </div>
-                                    <span>Wishlist</span>
+            {isMenuOpen && (
+                <div className="fixed top-[82px] left-0 w-full bg-white shadow-lg max-[1000px]:block hidden">
+                    <nav className="p-6">
+                        <ul className='flex flex-col gap-4 text-sm font-semibold'>
+                            {navs.map((nav) => (
+                                <li
+                                    key={nav.name}
+                                    className={`hover:text-green-600 cursor-pointer py-2 border-b ${pathname === nav.link ? 'text-green-600' : 'text-black'
+                                        }`}
+                                >
+                                    <Link href={nav.link} prefetch onClick={() => setIsMenuOpen(false)}>
+                                        {nav.name}
+                                    </Link>
+                                </li>
+                            ))}
+                        </ul>
+                    </nav>
+                    <div className='p-6 border-t'>
+                        <div className='flex flex-col gap-4'>
+                            <div className='flex items-center gap-4'>
+                                <div className='w-10 h-10 bg-[#EBEEF6] rounded-full flex justify-center items-center text-black'>
+                                    <IoMdHeartEmpty />
                                 </div>
-                                <div className='flex items-center gap-4'>
-                                    <div className='w-10 h-10 bg-[#EBEEF6] rounded-full flex justify-center items-center text-black'>
-                                        <RiShoppingCartLine />
-                                    </div>
-                                    <span>Cart</span>
+                                <span>Wishlist</span>
+                            </div>
+                            <div className='flex items-center gap-4'>
+                                <div className='w-10 h-10 bg-[#EBEEF6] rounded-full flex justify-center items-center text-black'>
+                                    <RiShoppingCartLine />
                                 </div>
-                                <div className='flex items-center gap-4'>
-                                    <div className='w-10 h-10 bg-[#EBEEF6] rounded-full flex justify-center items-center text-black'>
-                                        <IoBagCheckOutline />
-                                    </div>
-                                    <span>Orders</span>
+                                <span>Cart</span>
+                            </div>
+                            <div className='flex items-center gap-4'>
+                                <div className='w-10 h-10 bg-[#EBEEF6] rounded-full flex justify-center items-center text-black'>
+                                    <IoBagCheckOutline />
                                 </div>
-                                <div className='flex items-center gap-4 pt-4 border-t'>
-                                    <h2 className='text-sm text-black flex flex-col font-semibold'>
-                                        <span className='text-xs text-[#666666] font-thin'>WELCOME</span>
+                                <span>Orders</span>
+                            </div>
+                            <div className='flex items-center gap-4 pt-4 border-t'>
+                                <h2 className='text-sm text-black flex flex-col font-semibold'>
+                                    <span className='text-xs text-[#666666] font-thin'>WELCOME</span>
+                                    <Link href={'/login'} className='hover:underline transition'>
                                         LOG IN / REGISTER
-                                    </h2>
-                                </div>
-                                <div className='flex items-center gap-4'>
-                                    <div className='w-10 h-10 bg-[#EBEEF6] rounded-full flex justify-center items-center text-black'></div>
-                                    <h2 className='text-sm text-black flex flex-col font-semibold'>
-                                        <span className='text-xs text-[#666666] font-thin'>CART</span>
-                                        $50, 000
-                                    </h2>
-                                </div>
+                                    </Link>
+                                </h2>
+                            </div>
+                            <div className='flex items-center gap-4'>
+                                <div className='w-10 h-10 bg-[#EBEEF6] rounded-full flex justify-center items-center text-black'></div>
+                                <h2 className='text-sm text-black flex flex-col font-semibold'>
+                                    <span className='text-xs text-[#666666] font-thin'>CART</span>
+                                    $50, 000
+                                </h2>
                             </div>
                         </div>
                     </div>
-                )}
-            </div>
-        </header>
+                </div>
+            )}
+        </div>
+        </header >
     )
 }
