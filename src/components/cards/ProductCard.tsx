@@ -1,6 +1,8 @@
+'use client';
 import React from 'react';
 import Image from 'next/image';
 import { IoCheckmarkCircleSharp } from 'react-icons/io5';
+import { useRouter } from 'next/navigation';
 
 interface ProductCardProps {
     image: string;
@@ -17,8 +19,10 @@ const ProductCard: React.FC<ProductCardProps> = ({
     hasFreeShipping = true,
     inStock = true
 }) => {
+    const router = useRouter();
+
     return (
-        <div className="
+        <div onClick={() => router.push('/shop/123')} className="
             min-w-[230px] max-w-[230px]
             bg-gray-100 cursor-pointer 
             hover:scale-105 hover:shadow-2xl rounded-xl p-4 shadow-sm 

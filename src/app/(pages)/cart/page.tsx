@@ -183,7 +183,7 @@ export default function CartPage() {
                                 </div>
                             )}
 
-                            <Button variant="success" size="lg" className="w-full mt-6 py-3 font-semibold">
+                            <Button variant="success" size="lg" className="w-full mt-6 py-3 font-semibold" routeTo='/checkout'>
                                 PROCEED TO CHECKOUT
                             </Button>
 
