@@ -59,9 +59,9 @@ export default function Header({ isAuthPage }: { isAuthPage?: boolean }) {
                                 <div className='w-10 h-10 bg-[#EBEEF6] rounded-full flex justify-center items-center text-black'>
                                     <IoMdHeartEmpty />
                                 </div>
-                                <div className='w-10 h-10 bg-[#EBEEF6] rounded-full flex justify-center items-center text-black'>
+                                <Link href={'/cart'} className='w-10 h-10 bg-[#EBEEF6] rounded-full flex justify-center items-center text-black'>
                                     <RiShoppingCartLine />
-                                </div>
+                                </Link>
                                 <div className='w-10 h-10 bg-[#EBEEF6] rounded-full flex justify-center items-center text-black'>
                                     <IoBagCheckOutline />
                                 </div>
@@ -72,7 +72,9 @@ export default function Header({ isAuthPage }: { isAuthPage?: boolean }) {
                     <div className="max-[768px]:hidden">
                         <h2 className='text-sm text-black flex flex-col font-semibold'>
                             <span className='text-xs text-[#666666] font-thin'>WELCOME</span>
+                            <Link href={'/login'}>
                             LOG IN / REGISTER
+                            </Link>
                         </h2>
                     </div>
 
