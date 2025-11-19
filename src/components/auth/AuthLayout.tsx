@@ -30,7 +30,7 @@ const AuthLayout: React.FC<AuthLayoutProps> = ({
                 />
             </div>
 
-            <div className="w-full md:w-1/2 h-auto md:h-full flex flex-col justify-center items-start px-4 md:px-12 md:pr-40">
+            <div className="w-full md:w-1/2 h-auto md:h-full flex flex-col justify-center items-start px-4 md:px-12 md:pr-20">
                 <h1 className="text-[24px] md:text-[28px] font-bold text-[#1ABA1A] mb-1">{title}</h1>
                 <p className="text-[#999999] tracking-wider mb-6">{subtitle}</p>
 
