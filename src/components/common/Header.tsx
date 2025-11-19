@@ -10,8 +10,8 @@ export default function Header({ isAuthPage }: { isAuthPage?: boolean }) {
     const navs: { name: string; link: string }[] = [
         { name: 'HOME', link: '/' },
         { name: 'SHOP', link: '/shop' },
-        { name: 'PRODUCTS', link: '/products' },
-        { name: 'CONTACT', link: '/contact' },
+        { name: 'CART', link: '/cart' },
+        { name: 'CHECKOUT', link: '/checkout' },
     ]
 
     return (
