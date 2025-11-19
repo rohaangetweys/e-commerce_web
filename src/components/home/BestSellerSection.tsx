@@ -10,7 +10,7 @@ export default function BestSellerSection() {
                 <h2 className="text-lg font-light text-gray-500 hover:text-black transition cursor-pointer">POPULAR</h2>
             </div>
 
-            <div className="w-full h-full overflow-x-auto whitespace-nowrap no-scrollbar">
+            <div className="w-full h-[420px] overflow-x-auto whitespace-nowrap no-scrollbar">
                 <div className="flex gap-6 py-3 px-2 w-max">
                     {[...Array(6)].map((_, index) => (
                         <ProductCard

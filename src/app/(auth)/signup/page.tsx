@@ -2,7 +2,7 @@
 import React from 'react';
 import Button from '@/components/common/Button';
 import AuthLayout from '@/components/auth/AuthLayout';
-import Input from '@/components/auth/Input';
+import Input from '@/components/common/Input';
 
 export default function SignupPage() {
     const handleSubmit = (e: React.FormEvent) => {

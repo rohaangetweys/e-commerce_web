@@ -23,7 +23,6 @@ export default function HeroSection() {
                 </div>
 
                 <div className="h-full flex flex-col md:w-1/2 w-full gap-4">
-                    {/* card1 */}
                     <div className="w-full md:h-2/3 h-full py-10 px-15 relative overflow-hidden flex flex-col justify-between rounded-xl">
                         <Image
                             src="/headphones.png"
@@ -47,7 +46,6 @@ export default function HeroSection() {
                     </div>
 
                     <div className="flex gap-4 h-1/3 w-full">
-                        {/* card2 */}
                         <div className="w-1/2 h-full p-5 relative overflow-hidden flex flex-col justify-between rounded-xl">
                             <Image
                                 src="/playstation.png"
@@ -64,7 +62,6 @@ export default function HeroSection() {
                             <Button variant="secondary" size="sm" className="relative z-10">BUY NOW</Button>
                         </div>
 
-                        {/* card3 */}
                         <div className="w-1/2 h-full p-5 relative overflow-hidden flex flex-col justify-between rounded-xl">
                             <Image
                                 src="/keyboard.png"

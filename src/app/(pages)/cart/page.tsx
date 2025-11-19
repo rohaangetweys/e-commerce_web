@@ -53,9 +53,7 @@ export default function CartPage() {
                 <h1 className="text-2xl font-bold mb-6">SHOPPING CART</h1>
 
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                    {/* Cart Items */}
                     <div className="lg:col-span-2">
-                        {/* Header */}
                         <div className="hidden md:grid grid-cols-12 gap-4 py-3 border-b border-gray-200 text-sm font-semibold text-gray-600 mb-4">
                             <div className="col-span-5">PRODUCT</div>
                             <div className="col-span-2 text-center">PRICE</div>
@@ -63,11 +61,9 @@ export default function CartPage() {
                             <div className="col-span-2 text-center">TOTAL</div>
                         </div>
 
-                        {/* Cart Items List */}
                         <div className="space-y-4">
                             {cartItems.map((item) => (
                                 <div key={item.id} className="grid grid-cols-12 gap-4 py-4 border-b border-gray-100 items-center">
-                                    {/* Product Info */}
                                     <div className="col-span-12 md:col-span-5 flex gap-4">
                                         <div className="w-20 h-20 bg-gray-50 rounded-lg flex items-center justify-center border">
                                             <Image
@@ -99,7 +95,6 @@ export default function CartPage() {
                                         </div>
                                     </div>
 
-                                    {/* Price */}
                                     <div className="col-span-4 md:col-span-2 flex md:justify-center">
                                         <div className="text-sm font-semibold">
                                             ${item.price.toFixed(2)}
@@ -111,7 +106,6 @@ export default function CartPage() {
                                         </div>
                                     </div>
 
-                                    {/* Quantity */}
                                     <div className="col-span-4 md:col-span-3 flex md:justify-center">
                                         <div className="flex items-center gap-2">
                                             <button className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200 transition text-sm font-semibold">
@@ -124,7 +118,6 @@ export default function CartPage() {
                                         </div>
                                     </div>
 
-                                    {/* Total & Actions */}
                                     <div className="col-span-4 md:col-span-2 flex items-center justify-between md:justify-center">
                                         <div className="text-sm font-bold">
                                             ${(item.price * item.quantity).toFixed(2)}
@@ -137,7 +130,6 @@ export default function CartPage() {
                             ))}
                         </div>
 
-                        {/* Continue Shopping */}
                         <div className="mt-6">
                             <Link href="/shop" className="flex items-center gap-2 text-[#1ABA1A] font-semibold text-sm hover:underline">
                                 <IoIosArrowForward className="rotate-180" />
@@ -146,7 +138,6 @@ export default function CartPage() {
                         </div>
                     </div>
 
-                    {/* Order Summary */}
                     <div className="lg:col-span-1">
                         <div className="bg-gray-50 rounded-2xl p-6 border border-black/10">
                             <h2 className="text-lg font-bold mb-4">ORDER SUMMARY</h2>
@@ -178,7 +169,6 @@ export default function CartPage() {
                                 </div>
                             </div>
 
-                            {/* Free Shipping Progress */}
                             {subtotal < 199 && (
                                 <div className="mt-4 p-3 bg-green-50 rounded-lg border border-green-200">
                                     <div className="text-xs text-green-800 font-semibold mb-1">
@@ -193,17 +183,14 @@ export default function CartPage() {
                                 </div>
                             )}
 
-                            {/* Checkout Button */}
                             <Button variant="success" size="lg" className="w-full mt-6 py-3 font-semibold">
                                 PROCEED TO CHECKOUT
                             </Button>
 
-                            {/* PayPal Button */}
                             <Button variant="outline" className="w-full mt-3 py-3 font-semibold border-yellow-400 bg-yellow-400 hover:bg-yellow-500 text-black">
                                 CHECKOUT WITH PAYPAL
                             </Button>
 
-                            {/* Security Badges */}
                             <div className="mt-6 text-center">
                                 <div className="text-xs text-gray-500 font-semibold mb-3">
                                     Guaranteed Safe Checkout
@@ -218,7 +205,6 @@ export default function CartPage() {
                             </div>
                         </div>
 
-                        {/* Support Section */}
                         <div className="bg-gray-50 rounded-2xl p-6 mt-6 border border-black/10 text-center">
                             <div className="font-semibold text-gray-800 mb-2">Need Help?</div>
                             <div className="text-xl font-bold text-[#1ABA1A]">(025) 3886 25 16</div>

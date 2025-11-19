@@ -62,9 +62,9 @@ export default function Header({ isAuthPage }: { isAuthPage?: boolean }) {
                                 <Link href={'/cart'} className='w-10 h-10 bg-[#EBEEF6] rounded-full flex justify-center items-center text-black'>
                                     <RiShoppingCartLine />
                                 </Link>
-                                <div className='w-10 h-10 bg-[#EBEEF6] rounded-full flex justify-center items-center text-black'>
+                                <Link href={'/checkout'} className='w-10 h-10 bg-[#EBEEF6] rounded-full flex justify-center items-center text-black'>
                                     <IoBagCheckOutline />
-                                </div>
+                                </Link>
                             </>
                         )
                     }
