@@ -3,140 +3,58 @@ import Banner from '@/components/common/Banner'
 import Button from '@/components/common/Button'
 import SearchSection from '@/components/common/SearchSection'
 import BrandNewSection from '@/components/home/BrandNewSection'
+import { productsService } from '@/utils/supabase/products'
+import { categoriesService } from '@/utils/supabase/categories'
+import ShopFilters from '@/components/shop/ShopFilters'
+import Link from 'next/link'
 
+interface SearchParams {
+    category?: string
+    sort?: string
+    page?: string
+}
 
-const products = [
-    {
-        id: 1,
-        image: '/category1.png',
-        title: 'Wireless Bluetooth Headphones',
-        price: '$79.99',
-        hasFreeShipping: true,
-        inStock: true
-    },
-    {
-        id: 2,
-        image: '/category2.png',
-        title: 'Smart Fitness Watch',
-        price: '$129.99',
-        hasFreeShipping: true,
-        inStock: true
-    },
-    {
-        id: 3,
-        image: '/category3.png',
-        title: 'USB-C Fast Charger',
-        price: '$24.99',
-        hasFreeShipping: false,
-        inStock: true
-    },
-    {
-        id: 4,
-        image: '/category4.png',
-        title: 'Laptop Backpack',
-        price: '$49.99',
-        hasFreeShipping: true,
-        inStock: true
-    },
-    {
-        id: 5,
-        image: '/keyboard.png',
-        title: 'Wireless Mouse',
-        price: '$29.99',
-        hasFreeShipping: true,
-        inStock: false
-    },
-    {
-        id: 6,
-        image: '/gamingcard.png',
-        title: 'Smartphone Case',
-        price: '$15.99',
-        hasFreeShipping: true,
-        inStock: true
-    },
-    {
-        id: 7,
-        image: '/headphones.png',
-        title: 'Portable Speaker',
-        price: '$89.99',
-        hasFreeShipping: true,
-        inStock: true
-    },
-    {
-        id: 8,
-        image: '/images/product8.jpg',
-        title: 'Tablet Stand',
-        price: '$19.99',
-        hasFreeShipping: false,
-        inStock: true
-    },
-    {
-        id: 9,
-        image: '/category1.png',
-        title: 'Wireless Bluetooth Headphones',
-        price: '$79.99',
-        hasFreeShipping: true,
-        inStock: true
-    },
-    {
-        id: 10,
-        image: '/category2.png',
-        title: 'Smart Fitness Watch',
-        price: '$129.99',
-        hasFreeShipping: true,
-        inStock: true
-    },
-    {
-        id: 11,
-        image: '/category3.png',
-        title: 'USB-C Fast Charger',
-        price: '$24.99',
-        hasFreeShipping: false,
-        inStock: true
-    },
-    {
-        id: 12,
-        image: '/category4.png',
-        title: 'Laptop Backpack',
-        price: '$49.99',
-        hasFreeShipping: true,
-        inStock: true
-    },
-    {
-        id: 13,
-        image: '/keyboard.png',
-        title: 'Wireless Mouse',
-        price: '$29.99',
-        hasFreeShipping: true,
-        inStock: false
-    },
-    {
-        id: 14,
-        image: '/gamingcard.png',
-        title: 'Smartphone Case',
-        price: '$15.99',
-        hasFreeShipping: true,
-        inStock: true
-    },
-    {
-        id: 15,
-        image: '/headphones.png',
-        title: 'Portable Speaker',
-        price: '$89.99',
-        hasFreeShipping: true,
-        inStock: true
-    },
-    {
-        id: 16,
-        image: '/images/product8.jpg',
-        title: 'Tablet Stand',
-        price: '$19.99',
-        hasFreeShipping: false,
-        inStock: true
-    }
-]
+interface ShopPageProps {
+    searchParams: Promise<SearchParams>
+}
 
-export default function ShopPage() {
+export default async function ShopPage({ searchParams }: ShopPageProps) {
+    const params = await searchParams
+    
+    const [products, categories] = await Promise.all([
+        productsService.getProducts(),
+        categoriesService.getCategories()
+    ])
+
+    const selectedCategory = params.category || 'All Categories'
+    const sortBy = params.sort || 'featured'
+    const currentPage = parseInt(params.page || '1')
+    const productsPerPage = 12
+
+    let filteredProducts = products.filter(product => {
+        if (selectedCategory === 'All Categories') return true
+        
+        const category = categories.find(cat => cat.id === product.category_id)
+        return category?.name === selectedCategory
+    })
+
+    filteredProducts = filteredProducts.sort((a, b) => {
+        switch (sortBy) {
+            case 'price-low':
+                return a.price - b.price
+            case 'price-high':
+                return b.price - a.price
+            case 'newest':
+                return new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+            default:
+                return 0
+        }
+    })
+
+    const totalPages = Math.ceil(filteredProducts.length / productsPerPage)
+    const startIndex = (currentPage - 1) * productsPerPage
+    const productsToShow = filteredProducts.slice(startIndex, startIndex + productsPerPage)
+
     return (
         <div className="h-full w-full bg-transparent text-black">
             <SearchSection />
@@ -147,59 +65,67 @@ export default function ShopPage() {
                 bg-white rounded-2xl w-full mt-6 px-8 py-8
                 max-[1000px]:px-4 max-[1000px]:py-6
             ">
-                <div className="
-                    flex justify-between items-center mb-6
-                    max-[1000px]:flex-col max-[1000px]:items-start max-[1000px]:gap-3
-                ">
-                    <h2 className="text-lg font-semibold cursor-default max-[1000px]:text-base">
-                        ALL PRODUCTS
-                    </h2>
-
-                    <div className="flex items-center gap-4 max-[1000px]:w-full max-[1000px]:justify-between">
-                        <select className="
-                            border border-gray-300 rounded-lg px-3 py-2 text-sm 
-                            focus:outline-none focus:ring-2 focus:ring-[#1ABA1A]
-                            max-[1000px]:text-xs max-[1000px]:px-2 max-[1000px]:py-1.5
-                        ">
-                            <option>Sort by: Featured</option>
-                            <option>Price: Low to High</option>
-                            <option>Price: High to Low</option>
-                            <option>Newest First</option>
-                        </select>
-
-                        <div className="text-sm text-gray-600 max-[1000px]:text-xs">
-                            {products.length} products
-                        </div>
-                    </div>
-                </div>
+                <ShopFilters 
+                    categories={categories}
+                    selectedCategory={selectedCategory}
+                    sortBy={sortBy}
+                    totalProducts={filteredProducts.length}
+                    currentPage={currentPage}
+                    totalPages={totalPages}
+                />
 
                 <div className="
                     flex flex-wrap w-full gap-y-6 justify-between
                     max-[1000px]:justify-center max-[1000px]:gap-x-4
                 ">
-                    {products.map((product) => (
+                    {productsToShow.map((product) => (
                         <ProductCard
                             key={product.id}
-                            image={product.image}
-                            title={product.title}
-                            price={product.price}
-                            hasFreeShipping={product.hasFreeShipping}
-                            inStock={product.inStock}
+                            image={product.main_img_url}
+                            title={product.name}
+                            price={`$${product.price}`}
+                            hasFreeShipping={product.free_shipping}
+                            inStock={product.stock_quantity > 0}
                         />
                     ))}
                 </div>
 
-                <div className="flex justify-center mt-8">
-                    <Button
-                        variant="success"
-                        size="lg"
-                        type="submit"
-                        className="mb-4 max-[1000px]:text-sm max-[1000px]:px-5 max-[1000px]:py-2"
-                    >
-                        Load More Products
-                    </Button>
-                </div>
+                {totalPages > 1 && (
+                    <div className="flex justify-center items-center gap-4 mt-8">
+                        {currentPage > 1 && (
+                            <Link
+                                href={`/shop?${new URLSearchParams({
+                                    category: selectedCategory,
+                                    sort: sortBy,
+                                    page: (currentPage - 1).toString()
+                                })}`}
+                            >
+                                <Button variant="outline" size="sm">
+                                    Previous
+                                </Button>
+                            </Link>
+                        )}
+                        
+                        <span className="text-sm text-gray-600">
+                            Page {currentPage} of {totalPages}
+                        </span>
+                        
+                        {currentPage < totalPages && (
+                            <Link
+                                href={`/shop?${new URLSearchParams({
+                                    category: selectedCategory,
+                                    sort: sortBy,
+                                    page: (currentPage + 1).toString()
+                                })}`}
+                            >
+                                <Button variant="outline" size="sm">
+                                    Next
+                                </Button>
+                            </Link>
+                        )}
+                    </div>
+                )}
             </div>
         </div>
-    );
+    )
 }
