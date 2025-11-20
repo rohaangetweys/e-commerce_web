@@ -1,23 +1,25 @@
 import Image from 'next/image'
 import Button from '../common/Button'
 import SearchSection from '../common/SearchSection';
+import { categoriesService } from '@/utils/supabase/categories';
 
-export default function HeroSection() {
-    const typeList: String[] = [
-        "SALE 40% OFF", "Laptops", "PC & Computers", "Cell Phones", "Tablets",
-        "Gaming & VR", "Networking", "Cameras", "Sounds", "Office",
-        "Storage, USB", "Accessories", "Clearance"
-    ];
+export default async function HeroSection() {
+    const categories = await categoriesService.getCategories();
+    
+    const featuredCategories = categories.slice(0, 12);
+    const saleCategory = "SALE 40% OFF";
 
     return (
         <>
             <SearchSection />
             <div className="w-full mt-4 md:h-[492px] flex max-md:flex-col items-center justify-between gap-4">
-                <div className="py-5 px-14 rounded-xl w-1/4 bg-white max-md:hidden">
-                    <h3 className="text-[#F1352B] text-sm font-bold">SALE 40% OFF</h3>
-                    {typeList.slice(1).map((type, index) => (
-                        <div key={index} className="mt-4">
-                            <p className={`text-sm text-black ${index <= 2 ? "hover:text-[#F1352B] cursor-pointer" : "cursor-default"}`}>{type}</p>
+                <div className="py-5 h-full px-14 rounded-xl w-1/4 bg-white max-md:hidden">
+                    <h3 className="text-[#F1352B] text-sm font-bold">{saleCategory}</h3>
+                    {featuredCategories.map((category, index) => (
+                        <div key={category.id} className="mt-4">
+                            <p className={`text-sm text-black ${index <= 2 ? "hover:text-[#F1352B] cursor-pointer" : "cursor-default"}`}>
+                                {category.name}
+                            </p>
                         </div>
                     ))}
                 </div>

@@ -99,7 +99,7 @@ export default function Footer() {
                                     <div className="flex flex-col gap-4 mt-7">
                                         {section.items.map((link) => {
                                             return (
-                                                <p className="text-sm text-[#666666] cursor-pointer hover:text-green-600" key={link.label}>{link.label}</p>
+                                                <p className="text-sm text-[#666666] cursor-default" key={link.label}>{link.label}</p>
                                             )
                                         })}
                                     </div>

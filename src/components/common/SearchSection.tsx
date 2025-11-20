@@ -1,20 +1,17 @@
 'use client'
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { FaSearch } from 'react-icons/fa';
 import { MdKeyboardArrowDown } from 'react-icons/md';
+import { useApp } from '@/contexts/AppContext';
 
 export default function SearchSection() {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const [selectedCategory, setSelectedCategory] = useState('All Categories');
+    const { categories } = useApp();
 
-    const categories = [
+    const allCategories = [
         'All Categories',
-        'Electronics',
-        'Clothing',
-        'Books',
-        'Home & Kitchen',
-        'Sports',
-        'Beauty',
+        ...categories.map(category => category.name)
     ];
 
     return (
@@ -31,7 +28,7 @@ export default function SearchSection() {
 
                 {isDropdownOpen && (
                     <ul className="absolute top-12 left-0 w-60 bg-white border rounded shadow-lg z-50 max-h-60 overflow-auto">
-                        {categories.map((category) => (
+                        {allCategories.map((category) => (
                             <li
                                 key={category}
                                 className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
