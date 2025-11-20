@@ -1,13 +1,14 @@
 import { createClient } from './client';
 
+// In utils/supabase/categories.ts
 export interface Category {
     id: string;
     name: string;
     slug: string;
     description: string | null;
+    image_url: string;
     is_active: boolean;
     sort_order: number;
-    item_count?: number;
     created_at: string;
 }
 

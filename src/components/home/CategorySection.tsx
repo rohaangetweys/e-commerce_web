@@ -1,48 +1,36 @@
-import React from 'react'
 import CategoryCard from '../cards/CategoryCard'
+import { categoriesService } from '@/utils/supabase/categories'
+import { productsService } from '@/utils/supabase/products'
 
-const categories = [
-    {
-        title: "AUDIOS & CAMERAS",
-        promoImage: "/audiocard.png",
-        items: [
-            { image: "/category/speaker.png", name: "Speaker", itemCount: "12 Items" },
-            { image: "/category/camera.png", name: "DSLR Camera", itemCount: "9 Items" },
-            { image: "/category/earbuds.png", name: "Earbuds", itemCount: "5 Items" },
-            { image: "/category/mic.png", name: "Microphone", itemCount: "12 Items" },
-        ],
-    },
-    {
-        title: "GAMING",
-        promoImage: "/gamingcard.png",
-        items: [
-            { image: "/category/monitor.png", name: "Monitors", itemCount: "28 Items" },
-            { image: "/category/chair.png", name: "Chair", itemCount: "12 Items" },
-            { image: "/category/controller.png", name: "Controller", itemCount: "9 Items" },
-            { image: "/category/keyboard.png", name: "Keyboards", itemCount: "30 Items" },
-        ],
-    },
-    {
-        title: "OFFICE EQUIPMENTS",
-        promoImage: "/officecard.png",
-        items: [
-            { image: "/category/printer.png", name: "Printers", itemCount: "9 Items" },
-            { image: "/category/network.png", name: "Network", itemCount: "90 Items" },
-            { image: "/category/security.png", name: "Security", itemCount: "12 Items" },
-            { image: "/category/projector.png", name: "Projectors", itemCount: "12 Items" },
-        ],
-    },
-]
+export default async function CategorySection() {
+    const [categories, products] = await Promise.all([
+        categoriesService.getCategories(),
+        productsService.getProducts()
+    ])
 
-export default function CategorySection() {
+    const featuredCategories = categories.slice(0, 3).map(category => {
+        const categoryProducts = products.filter(product => product.category_id === category.id)
+        const featuredProducts = categoryProducts.slice(0, 4).map(product => ({
+            image: product.main_img_url,
+            name: product.name,
+            itemCount: `${product.stock_quantity} in stock`
+        }))
+
+        return {
+            title: category.name.toUpperCase(),
+            promoImage: category.image_url,
+            items: featuredProducts
+        }
+    })
+
     return (
         <div className="w-full grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
-            {categories.map((c, i) => (
+            {featuredCategories.map((category, i) => (
                 <CategoryCard
-                    key={i}
-                    title={c.title}
-                    promoImage={c.promoImage}
-                    items={c.items}
+                    key={category.title}
+                    title={category.title}
+                    promoImage={category.promoImage}
+                    items={category.items}
                 />
             ))}
         </div>

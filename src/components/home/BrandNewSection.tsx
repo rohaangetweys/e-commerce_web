@@ -1,29 +1,17 @@
 import BrandNewCard from '../cards/BrandNewCard'
+import { productsService } from '@/utils/supabase/products'
 
-export default function BrandNewSection() {
-    const items = [
-        {
-            image: "/brandnew1.png",
-            title: "Zumac Steel Computer Case",
-            description: "And an option to upgrade every three years",
-        },
-        {
-            image: "/brandnew2.png",
-            title: "Summer Sale with Sale up to 50% OFF for Foam Gaming Chair.",
-            description: "Limited time offer. Hurry up",
-        },
-        {
-            image: "/brandnew3.png",
-            title: "Summer Sale with Sale up to 50% OFF for Foam Gaming Chair.",
-            description: "Limited time offer. Hurry up",
-        },
-        {
-            image: "/brandnew4.png",
-            title: "iPed Pro Mini 6 - Powerful I in hand",
-            description:
-                "From $19.99/month for 36 months. $280.35 final payment due in month 37",
-        },
-    ];
+export default async function BrandNewSection() {
+    const products = await productsService.getProducts();
+
+    const latestProducts = products
+        .filter(product => product.is_new)
+        .slice(0, 4)
+        .map(product => ({
+            image: product.main_img_url,
+            title: product.name,
+            description: product.description?.split('\n')[0] || 'Check out this amazing new product!'
+        }));
 
     return (
         <div className="bg-white rounded-2xl w-full mt-6 px-8 py-8">
@@ -31,7 +19,7 @@ export default function BrandNewSection() {
 
             <div className="overflow-x-auto whitespace-nowrap no-scrollbar">
                 <div className="flex gap-6 w-full">
-                    {items.map((item, i) => (
+                    {latestProducts.map((item, i) => (
                         <BrandNewCard
                             key={i}
                             image={item.image}

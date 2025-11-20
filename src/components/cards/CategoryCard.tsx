@@ -20,11 +20,6 @@ const CategoryCard: React.FC<CategoryCardProps> = ({
 }) => {
     return (
         <div className="bg-white rounded-2xl p-6 hover:shadow-md transition">
-            <div className="flex items-center justify-between mb-4">
-                <h2 className="text-lg font-semibold cursor-default">{title}</h2>
-                <button className="text-sm text-gray-500 cursor-pointer">View All</button>
-            </div>
-
             <div className="w-full h-[200px] rounded-xl overflow-hidden bg-gray-100 relative mb-6">
                 <Image
                     src={promoImage}

@@ -45,7 +45,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
             </div>
 
             <div className="flex flex-col text-left pt-4 max-[1000px]:pt-3">
-                <p className="text-base font-semibold text-gray-800 max-[1000px]:text-sm">
+                <p className="text-base font-semibold text-gray-800 max-[1000px]:text-sm truncate">
                     {title}
                 </p>
 
