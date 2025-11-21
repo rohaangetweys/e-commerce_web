@@ -25,9 +25,6 @@ export default async function RootLayout({
     categoriesService.getCategories()
   ]);
 
-  console.log('Products:', products);
-  console.log('Categories:', categories);
-
   return (
     <html lang="en" className="bg-[#EBEEF6]">
       <body className={`${inter.className} bg-[#EBEEF6] flex flex-col min-h-screen items-center`}>

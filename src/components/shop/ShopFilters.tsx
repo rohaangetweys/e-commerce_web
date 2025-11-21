@@ -11,18 +11,18 @@ interface ShopFiltersProps {
     totalPages: number
 }
 
-export default function ShopFilters({ 
-    categories, 
-    selectedCategory, 
-    sortBy, 
-    totalProducts 
+export default function ShopFilters({
+    categories,
+    selectedCategory,
+    sortBy,
+    totalProducts
 }: ShopFiltersProps) {
     const searchParams = useSearchParams()
     const router = useRouter()
 
     const createQueryString = (name: string, value: string) => {
         const params = new URLSearchParams(searchParams.toString())
-        
+
         if (value === 'All Categories' && name === 'category') {
             params.delete('category')
         } else if (value === 'featured' && name === 'sort') {
@@ -30,12 +30,12 @@ export default function ShopFilters({
         } else {
             params.set(name, value)
         }
-        
+
         // Reset to page 1 when changing filters
         if (name !== 'page') {
             params.delete('page')
         }
-        
+
         return params.toString()
     }
 
@@ -59,24 +59,22 @@ export default function ShopFilters({
             </h2>
 
             <div className="flex items-center gap-4 max-[1000px]:w-full max-[1000px]:justify-between">
-                <select 
+                <select
                     value={selectedCategory}
                     onChange={(e) => handleCategoryChange(e.target.value)}
-                    className="
-                        border border-gray-300 rounded-lg px-3 py-2 text-sm 
-                        focus:outline-none focus:ring-2 focus:ring-[#1ABA1A]
-                        max-[1000px]:text-xs max-[1000px]:px-2 max-[1000px]:py-1.5
-                    "
+                    className="border border-gray-300 rounded-lg px-3 py-2 text-sm"
                 >
                     <option value="All Categories">All Categories</option>
+
                     {categories.map(category => (
-                        <option key={category.id} value={category.name}>
+                        <option key={category.id} value={category.slug}>
                             {category.name}
                         </option>
                     ))}
                 </select>
 
-                <select 
+
+                <select
                     value={sortBy}
                     onChange={(e) => handleSortChange(e.target.value)}
                     className="

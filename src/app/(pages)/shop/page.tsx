@@ -35,8 +35,9 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
         if (selectedCategory === 'All Categories') return true
 
         const category = categories.find(cat => cat.id === product.category_id)
-        return category?.name === selectedCategory
+        return category?.slug === selectedCategory
     })
+
 
     filteredProducts = filteredProducts.sort((a, b) => {
         switch (sortBy) {

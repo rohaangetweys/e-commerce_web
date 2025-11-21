@@ -10,7 +10,8 @@ export default async function BrandNewSection() {
         .map(product => ({
             image: product.main_img_url,
             title: product.name,
-            description: product.description?.split('\n')[0] || 'Check out this amazing new product!'
+            description: product.description?.split('\n')[0] || 'Check out this amazing new product!',
+            slug: product.slug
         }));
 
     return (
@@ -21,6 +22,7 @@ export default async function BrandNewSection() {
                 <div className="flex gap-6 w-full">
                     {latestProducts.map((item, i) => (
                         <BrandNewCard
+                            slug={item.slug}
                             key={i}
                             image={item.image}
                             title={item.title}

@@ -2,10 +2,11 @@ import Image from 'next/image'
 import Button from '../common/Button'
 import SearchSection from '../common/SearchSection';
 import { categoriesService } from '@/utils/supabase/categories';
+import Link from 'next/link';
 
 export default async function HeroSection() {
     const categories = await categoriesService.getCategories();
-    
+
     const featuredCategories = categories.slice(0, 12);
     const saleCategory = "SALE 40% OFF";
 
@@ -17,9 +18,13 @@ export default async function HeroSection() {
                     <h3 className="text-[#F1352B] text-sm font-bold">{saleCategory}</h3>
                     {featuredCategories.map((category, index) => (
                         <div key={category.id} className="mt-4">
-                            <p className={`text-sm text-black ${index <= 2 ? "hover:text-[#F1352B] cursor-pointer" : "cursor-default"}`}>
+                            <Link
+                                href={`/shop?category=${encodeURIComponent(category.slug)}`}
+                                className={`text-sm text-black ${index <= 2 ? "hover:text-[#F1352B] cursor-pointer" : "cursor-default"}`}
+                            >
                                 {category.name}
-                            </p>
+                            </Link>
+
                         </div>
                     ))}
                 </div>

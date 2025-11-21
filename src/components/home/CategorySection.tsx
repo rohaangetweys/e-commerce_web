@@ -13,7 +13,8 @@ export default async function CategorySection() {
         const featuredProducts = categoryProducts.slice(0, 4).map(product => ({
             image: product.main_img_url,
             name: product.name,
-            itemCount: `${product.stock_quantity} in stock`
+            itemCount: `${product.stock_quantity} in stock`,
+            slug: product.slug
         }))
 
         return {
