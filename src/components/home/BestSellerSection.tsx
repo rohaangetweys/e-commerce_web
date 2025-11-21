@@ -15,6 +15,7 @@ export default async function BestSellerSection() {
                 <div className="flex gap-6 py-3 px-2 w-max">
                     {bestSellerProducts.map((product) => (
                         <ProductCard
+                            slug={product.slug}
                             key={product.id}
                             image={product.main_img_url}
                             title={product.name}

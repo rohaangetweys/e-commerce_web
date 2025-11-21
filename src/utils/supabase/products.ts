@@ -3,6 +3,7 @@ import { createClient } from './client';
 export interface Product {
     id: string;
     name: string;
+    slug: string;
     description: string;
     price: number;
     compare_price?: number;

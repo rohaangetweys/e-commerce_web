@@ -1,12 +1,15 @@
+'use client'
+import { useState } from 'react';
 import Button from "@/components/common/Button";
 
 interface ProductPurchaseSectionProps {
-    qty: number;
-    setQty: (qty: number) => void;
-    total: number;
+    product: any;
 }
 
-export default function ProductPurchaseSection({ qty, setQty, total }: ProductPurchaseSectionProps) {
+export default function ProductPurchaseSection({ product }: ProductPurchaseSectionProps) {
+    const [qty, setQty] = useState(1);
+    const total = product.price * qty;
+
     return (
         <div className="lg:col-span-1">
             <div className="bg-gray-50 rounded-2xl p-6 w-full border border-black/10">

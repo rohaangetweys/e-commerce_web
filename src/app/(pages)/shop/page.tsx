@@ -20,7 +20,7 @@ interface ShopPageProps {
 
 export default async function ShopPage({ searchParams }: ShopPageProps) {
     const params = await searchParams
-    
+
     const [products, categories] = await Promise.all([
         productsService.getProducts(),
         categoriesService.getCategories()
@@ -33,7 +33,7 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
 
     let filteredProducts = products.filter(product => {
         if (selectedCategory === 'All Categories') return true
-        
+
         const category = categories.find(cat => cat.id === product.category_id)
         return category?.name === selectedCategory
     })
@@ -65,7 +65,7 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
                 bg-white rounded-2xl w-full mt-6 px-8 py-8
                 max-[1000px]:px-4 max-[1000px]:py-6
             ">
-                <ShopFilters 
+                <ShopFilters
                     categories={categories}
                     selectedCategory={selectedCategory}
                     sortBy={sortBy}
@@ -80,6 +80,7 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
                 ">
                     {productsToShow.map((product) => (
                         <ProductCard
+                            slug={product.slug}
                             key={product.id}
                             image={product.main_img_url}
                             title={product.name}
@@ -105,11 +106,11 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
                                 </Button>
                             </Link>
                         )}
-                        
+
                         <span className="text-sm text-gray-600">
                             Page {currentPage} of {totalPages}
                         </span>
-                        
+
                         {currentPage < totalPages && (
                             <Link
                                 href={`/shop?${new URLSearchParams({

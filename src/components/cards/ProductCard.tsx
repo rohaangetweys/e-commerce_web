@@ -5,6 +5,7 @@ import { IoCheckmarkCircleSharp } from 'react-icons/io5';
 import { useRouter } from 'next/navigation';
 
 interface ProductCardProps {
+    slug: string;
     image: string;
     title: string;
     price: string;
@@ -13,6 +14,7 @@ interface ProductCardProps {
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({
+    slug,
     image,
     title,
     price,
@@ -22,7 +24,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
     const router = useRouter();
 
     return (
-        <div onClick={() => router.push('/shop/123')} className="
+        <div onClick={() => router.push(`/shop/${slug}`)} className="
             min-w-[230px] max-w-[230px]
             bg-gray-100 cursor-pointer 
             hover:scale-105 hover:shadow-2xl rounded-xl p-4 shadow-sm 
