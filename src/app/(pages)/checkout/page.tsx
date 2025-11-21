@@ -5,39 +5,78 @@ import Button from '@/components/common/Button'
 import Image from 'next/image'
 import Link from 'next/link'
 import { IoIosArrowForward } from 'react-icons/io'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Input from '@/components/common/Input'
+import { useRouter } from 'next/navigation'
+import toast from 'react-hot-toast'
+import { FaShoppingCart } from 'react-icons/fa'
 
-const cartItems = [
-    {
-        id: 1,
-        image: "/category1.png",
-        title: "SROK Smart Phone 128GB, Oled Retina",
-        price: 579.00,
-        color: "Midnight Blue",
-        memory: "128GB",
-        quantity: 1,
-        inStock: true
-    },
-    {
-        id: 2,
-        image: "/category2.png",
-        title: "Wireless Bluetooth Headphones",
-        price: 79.99,
-        color: "Black",
-        quantity: 2,
-        inStock: true
-    }
-]
+interface CartItem {
+    id: string;
+    name: string;
+    price: number;
+    main_img_url: string;
+    slug: string;
+    quantity: number;
+    sku: string;
+}
 
 export default function CheckoutPage() {
     const [paymentMethod, setPaymentMethod] = useState('credit-card')
     const [saveInfo, setSaveInfo] = useState(true)
+    const [cartItems, setCartItems] = useState<CartItem[]>([])
+    const [isClient, setIsClient] = useState(false)
+    const router = useRouter()
+
+    useEffect(() => {
+        setIsClient(true)
+        const cart = JSON.parse(localStorage.getItem('cart') || '[]')
+        setCartItems(cart)
+    }, [])
 
     const subtotal = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0)
-    const shipping = subtotal > 199 ? 0 : 15.00
+    const shipping = 0
     const tax = subtotal * 0.08
     const total = subtotal + shipping + tax
+
+    const handlePlaceOrder = () => {
+        localStorage.setItem('cart', '[]')
+        toast.success('Order placed successfully!')
+        setTimeout(() => {
+            router.push('/')
+        }, 2000)
+    }
+
+    if (!isClient) {
+        return (
+            <div className="h-full w-full bg-transparent text-black">
+                <SearchSection />
+                <Banner />
+                <div className="bg-white rounded-2xl w-full mt-6 px-8 py-8 flex justify-center">
+                    <div className="text-lg">Loading checkout...</div>
+                </div>
+            </div>
+        )
+    }
+
+    if (cartItems.length === 0) {
+        return (
+            <div className="h-full w-full bg-transparent text-black">
+                <SearchSection />
+                <Banner />
+                <div className="bg-white rounded-2xl w-full mt-6 px-8 py-8">
+                    <div className="text-center py-12">
+                        <div className="text-gray-400 text-6xl mb-4 flex justify-center">
+                            <FaShoppingCart />
+                        </div>
+                        <h2 className="text-xl font-semibold text-gray-600 mb-2">Your cart is empty</h2>
+                        <p className="text-gray-500 mb-6">Add some products to your cart to checkout.</p>
+                        <Button variant="success" routeTo='/shop'>Continue Shopping</Button>
+                    </div>
+                </div>
+            </div>
+        )
+    }
 
     return (
         <div className="h-full w-full bg-transparent text-black">
@@ -128,19 +167,6 @@ export default function CheckoutPage() {
                                         className="md:col-span-2"
                                     />
                                 </div>
-
-                                <div className="flex items-center gap-2 mt-4">
-                                    <input
-                                        type="checkbox"
-                                        id="save-address"
-                                        checked={saveInfo}
-                                        onChange={(e) => setSaveInfo(e.target.checked)}
-                                        className="w-4 h-4 text-[#1ABA1A] bg-gray-100 border-gray-300 rounded focus:ring-[#1ABA1A] focus:ring-2"
-                                    />
-                                    <label htmlFor="save-address" className="text-sm text-gray-600">
-                                        Save this information for next time
-                                    </label>
-                                </div>
                             </section>
 
                             {/* Shipping Method */}
@@ -156,7 +182,7 @@ export default function CheckoutPage() {
                                         />
                                         <div className="flex-1">
                                             <div className="font-semibold">Standard Shipping</div>
-                                            <div className="text-sm text-gray-500">5-7 business days • ${shipping === 0 ? 'FREE' : shipping.toFixed(2)}</div>
+                                            <div className="text-sm text-gray-500">5-7 business days • ${shipping === 0 && 'FREE'}</div>
                                         </div>
                                     </label>
                                     <label className="flex items-center gap-3 p-4 border border-gray-200 rounded-lg cursor-pointer hover:border-[#1ABA1A] transition-colors">
@@ -288,25 +314,28 @@ export default function CheckoutPage() {
                             <h2 className="text-lg font-bold mb-4">ORDER SUMMARY</h2>
 
                             {/* Cart Items Preview */}
-                            <div className="space-y-3 mb-4">
+                            <div className="space-y-3 mb-4 max-h-80 overflow-y-auto">
                                 {cartItems.map((item) => (
                                     <div key={item.id} className="flex gap-3 py-2">
                                         <div className="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center border">
                                             <Image
-                                                src={item.image}
-                                                alt={item.title}
+                                                src={item.main_img_url}
+                                                alt={item.name}
                                                 width={40}
                                                 height={40}
                                                 className="object-contain"
                                             />
                                         </div>
                                         <div className="flex-1 min-w-0">
-                                            <h3 className="font-semibold text-gray-800 text-sm leading-tight truncate">
-                                                {item.title}
-                                            </h3>
+                                            <Link href={`/shop/${item.slug}`}>
+                                                <h3 className="font-semibold text-gray-800 text-sm leading-tight hover:text-[#1ABA1A] transition-colors cursor-pointer">
+                                                    {item.name}
+                                                </h3>
+                                            </Link>
                                             <div className="text-xs text-gray-500">
-                                                Qty: {item.quantity}
+                                                Qty: {item.quantity} • ${item.price}
                                             </div>
+                                            <div className="text-xs text-gray-500">SKU: {item.sku}</div>
                                         </div>
                                         <div className="text-sm font-semibold">
                                             ${(item.price * item.quantity).toFixed(2)}
@@ -317,17 +346,13 @@ export default function CheckoutPage() {
 
                             <div className="space-y-3 text-sm border-t border-gray-200 pt-4">
                                 <div className="flex justify-between">
-                                    <span className="text-gray-600">Subtotal</span>
+                                    <span className="text-gray-600">Subtotal ({cartItems.reduce((sum, item) => sum + item.quantity, 0)} items)</span>
                                     <span className="font-semibold">${subtotal.toFixed(2)}</span>
                                 </div>
                                 <div className="flex justify-between">
                                     <span className="text-gray-600">Shipping</span>
                                     <span className="font-semibold">
-                                        {shipping === 0 ? (
-                                            <span className="text-[#1ABA1A]">FREE</span>
-                                        ) : (
-                                            `$${shipping.toFixed(2)}`
-                                        )}
+                                        {shipping === 0 && (<span className="text-[#1ABA1A]">FREE</span>)}
                                     </span>
                                 </div>
                                 <div className="flex justify-between">
@@ -342,23 +367,13 @@ export default function CheckoutPage() {
                                 </div>
                             </div>
 
-                            {/* Free Shipping Progress */}
-                            {subtotal < 199 && (
-                                <div className="mt-4 p-3 bg-green-50 rounded-lg border border-green-200">
-                                    <div className="text-xs text-green-800 font-semibold mb-1">
-                                        Add ${(199 - subtotal).toFixed(2)} more for FREE shipping!
-                                    </div>
-                                    <div className="w-full bg-gray-200 rounded-full h-2">
-                                        <div 
-                                            className="bg-[#1ABA1A] h-2 rounded-full" 
-                                            style={{ width: `${(subtotal / 199) * 100}%` }}
-                                        ></div>
-                                    </div>
-                                </div>
-                            )}
-
                             {/* Place Order Button */}
-                            <Button variant="success" size="lg" className="w-full mt-6 py-3 font-semibold">
+                            <Button
+                                variant="success"
+                                size="lg"
+                                className="w-full mt-6 py-3 font-semibold"
+                                onClick={handlePlaceOrder}
+                            >
                                 PLACE ORDER
                             </Button>
 
