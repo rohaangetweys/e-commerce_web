@@ -1,6 +1,5 @@
 import { createClient } from './client';
 
-// In utils/supabase/categories.ts
 export interface Category {
     id: string;
     name: string;
@@ -10,6 +9,7 @@ export interface Category {
     is_active: boolean;
     sort_order: number;
     created_at: string;
+    item_count?: number
 }
 
 export const categoriesService = {

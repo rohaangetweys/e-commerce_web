@@ -4,6 +4,7 @@ import "./globals.css";
 import { AppProvider } from '@/contexts/AppContext';
 import { productsService } from '@/utils/supabase/products';
 import { categoriesService } from '@/utils/supabase/categories';
+import { Toaster } from "react-hot-toast";
 
 const inter = Inter({
   subsets: ['latin'],
@@ -28,6 +29,7 @@ export default async function RootLayout({
   return (
     <html lang="en" className="bg-[#EBEEF6]">
       <body className={`${inter.className} bg-[#EBEEF6] flex flex-col min-h-screen items-center`}>
+        <Toaster />
         <AppProvider initialProducts={products} initialCategories={categories}>
           {children}
         </AppProvider>

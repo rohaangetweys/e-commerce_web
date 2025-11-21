@@ -37,19 +37,31 @@ const Button: React.FC<ButtonProps> = ({
     };
 
     return (
-        <button
-            className={cn(baseClasses, variants[variant], sizes[size], className)}
-            {...props}
-            onClick={() => {
-                if (routeTo) {
-                    router.push(routeTo);
-                } else {
-                    router.push('/shop/123')
-                }
-            }}
-        >
-            {children}
-        </button>
+        <>
+            {
+                routeTo ? (
+                    <button
+                        className={cn(baseClasses, variants[variant], sizes[size], className)}
+                        {...props}
+                        onClick={() => {
+                            if (routeTo) {
+                                router.push(routeTo);
+                            }
+                        }}
+                    >
+                        {children}
+                    </button>
+                ) : (
+                    <button
+                        className={cn(baseClasses, variants[variant], sizes[size], className)}
+                        {...props}
+                    >
+                        {children}
+                    </button>
+                )
+            }
+
+        </>
     );
 };
 
