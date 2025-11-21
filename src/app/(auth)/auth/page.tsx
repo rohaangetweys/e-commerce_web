@@ -127,10 +127,6 @@ export default function AuthPage() {
                         disabled={loading}
                     />
 
-                    <p className="text-[#999999] text-[13px] underline cursor-pointer hover:text-black transition mb-5">
-                        Forget Password?
-                    </p>
-
                     <Button 
                         variant="success" 
                         size="md" 

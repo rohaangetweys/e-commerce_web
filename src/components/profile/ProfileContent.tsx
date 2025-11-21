@@ -19,34 +19,19 @@ export default function ProfileContent({ user, profile }: ProfileContentProps) {
 
     const handleLogout = async () => {
         setLoading(true);
+
         try {
-            const { error } = await supabase.auth.signOut();
+            await supabase.auth.signOut();
 
-            if (error) {
-                console.error('Standard logout failed:', error);
-                clearAllCookies();
-            }
-
-            window.location.href = '/';
+            router.push('/');
+            router.refresh();
         } catch (error) {
-            console.error('Error logging out:', error);
-            window.location.href = '/';
+            console.error('Logout error:', error);
+            router.push('/');
+            router.refresh();
         } finally {
             setLoading(false);
         }
-    };
-
-    const clearAllCookies = () => {
-        const cookies = document.cookie.split(';');
-        for (let i = 0; i < cookies.length; i++) {
-            const cookie = cookies[i];
-            const eqPos = cookie.indexOf('=');
-            const name = eqPos > -1 ? cookie.substr(0, eqPos).trim() : cookie.trim();
-            document.cookie = name + '=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/';
-            document.cookie = name + '=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/;domain=' + window.location.hostname;
-        }
-        localStorage.clear();
-        sessionStorage.clear();
     };
 
     const displayName = profile?.full_name || user?.email || 'User';
@@ -58,6 +43,7 @@ export default function ProfileContent({ user, profile }: ProfileContentProps) {
 
             <div className="bg-white rounded-2xl w-full mt-6 px-8 py-8">
                 <div className="max-w-4xl mx-auto">
+
                     <div className="text-center mb-8">
                         <div className="w-24 h-24 bg-[#1ABA1A] rounded-full flex items-center justify-center mx-auto mb-4">
                             <FiUser className="text-white text-3xl" />
@@ -67,6 +53,7 @@ export default function ProfileContent({ user, profile }: ProfileContentProps) {
                     </div>
 
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+
                         <div className="bg-gray-50 rounded-xl p-6">
                             <h2 className="text-lg font-semibold text-gray-800 mb-4 flex items-center gap-2">
                                 <FiUser className="text-[#1ABA1A]" />
@@ -149,6 +136,7 @@ export default function ProfileContent({ user, profile }: ProfileContentProps) {
                             </Button>
                         </div>
                     </div>
+
                 </div>
             </div>
         </div>
