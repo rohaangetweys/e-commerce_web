@@ -1,220 +1,211 @@
-import SearchSection from '@/components/common/SearchSection'
-import Banner from '@/components/common/Banner'
-import Button from '@/components/common/Button'
-import Image from 'next/image'
-import Link from 'next/link'
-import { IoIosArrowForward } from 'react-icons/io'
-import { RiDeleteBin6Line } from 'react-icons/ri'
+'use client'
+import { useState, useEffect } from 'react';
+import Link from 'next/link';
+import Image from 'next/image';
+import Banner from "@/components/common/Banner";
+import SearchSection from "@/components/common/SearchSection";
+import Button from "@/components/common/Button";
+import { FaShoppingCart, FaTrash, FaPlus, FaMinus } from 'react-icons/fa';
+import toast from 'react-hot-toast';
 
-const cartItems = [
-    {
-        id: 1,
-        image: "/category1.png",
-        title: "SROK Smart Phone 128GB, Oled Retina",
-        price: 579.00,
-        originalPrice: 778.00,
-        color: "Midnight Blue",
-        memory: "128GB",
-        quantity: 1,
-        inStock: true
-    },
-    {
-        id: 2,
-        image: "/category2.png",
-        title: "Wireless Bluetooth Headphones",
-        price: 79.99,
-        color: "Black",
-        quantity: 2,
-        inStock: true
-    },
-    {
-        id: 3,
-        image: "/category3.png",
-        title: "Smart Fitness Watch",
-        price: 129.99,
-        color: "Silver",
-        quantity: 1,
-        inStock: true
-    }
-]
+interface CartItem {
+    id: string;
+    name: string;
+    price: number;
+    main_img_url: string;
+    slug: string;
+    quantity: number;
+    sku: string;
+}
 
 export default function CartPage() {
-    const subtotal = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0)
-    const shipping = subtotal > 199 ? 0 : 15.00
-    const tax = subtotal * 0.08
-    const total = subtotal + shipping + tax
+    const [cartItems, setCartItems] = useState<CartItem[]>([]);
+    const [isClient, setIsClient] = useState(false);
+
+    useEffect(() => {
+        setIsClient(true);
+        const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+        setCartItems(cart);
+    }, []);
+
+    const updateQuantity = (id: string, newQuantity: number) => {
+        if (newQuantity < 1) return;
+
+        const updatedCart = cartItems.map(item =>
+            item.id === id ? { ...item, quantity: newQuantity } : item
+        );
+        setCartItems(updatedCart);
+        localStorage.setItem('cart', JSON.stringify(updatedCart));
+
+        const item = cartItems.find(item => item.id === id);
+        if (item) {
+            toast.success(`Updated ${item.name} quantity to ${newQuantity}`);
+        }
+    };
+
+    const removeItem = (id: string) => {
+        const itemToRemove = cartItems.find(item => item.id === id);
+        const updatedCart = cartItems.filter(item => item.id !== id);
+        setCartItems(updatedCart);
+        localStorage.setItem('cart', JSON.stringify(updatedCart));
+
+        if (itemToRemove) {
+            toast.error(`Removed ${itemToRemove.name} from cart`);
+        }
+    };
+
+    const clearCart = () => {
+        if (cartItems.length === 0) return;
+
+        setCartItems([]);
+        localStorage.setItem('cart', '[]');
+        toast.error('Cart cleared');
+    };
+
+    const getTotalPrice = () => {
+        return cartItems.reduce((total, item) => total + (item.price * item.quantity), 0);
+    };
+
+    const getTotalItems = () => {
+        return cartItems.reduce((total, item) => total + item.quantity, 0);
+    };
+
+    if (!isClient) {
+        return (
+            <div className="h-full w-full bg-transparent text-black">
+                <SearchSection />
+                <Banner hasProduct={false} />
+                <div className="bg-white rounded-2xl w-full mt-6 px-8 py-8 flex justify-center">
+                    <div className="text-lg">Loading cart...</div>
+                </div>
+            </div>
+        );
+    }
 
     return (
         <div className="h-full w-full bg-transparent text-black">
             <SearchSection />
-            <Banner />
+            <Banner hasProduct={false} />
 
             <div className="bg-white rounded-2xl w-full mt-6 px-8 py-8">
-                <h1 className="text-2xl font-bold mb-6">SHOPPING CART</h1>
+                <div className="flex justify-between items-center mb-8">
+                    <h1 className="text-2xl font-semibold">Shopping Cart</h1>
+                    {cartItems.length > 0 && (
+                        <Button
+                            variant="outline"
+                            onClick={clearCart}
+                            className="border-red-500 text-red-500 hover:bg-red-50 flex items-center gap-2"
+                        >
+                            <FaTrash className="text-sm" />
+                            Clear Cart
+                        </Button>
+                    )}
+                </div>
 
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                    <div className="lg:col-span-2">
-                        <div className="hidden md:grid grid-cols-12 gap-4 py-3 border-b border-gray-200 text-sm font-semibold text-gray-600 mb-4">
-                            <div className="col-span-5">PRODUCT</div>
-                            <div className="col-span-2 text-center">PRICE</div>
-                            <div className="col-span-3 text-center">QUANTITY</div>
-                            <div className="col-span-2 text-center">TOTAL</div>
+                {cartItems.length === 0 ? (
+                    <div className="text-center py-12">
+                        <div className="text-gray-400 text-6xl mb-4 flex justify-center">
+                            <FaShoppingCart />
                         </div>
-
-                        <div className="space-y-4">
-                            {cartItems.map((item) => (
-                                <div key={item.id} className="grid grid-cols-12 gap-4 py-4 border-b border-gray-100 items-center">
-                                    <div className="col-span-12 md:col-span-5 flex gap-4">
-                                        <div className="w-20 h-20 bg-gray-50 rounded-lg flex items-center justify-center border">
+                        <h2 className="text-xl font-semibold text-gray-600 mb-2">Your cart is empty</h2>
+                        <p className="text-gray-500 mb-6">Add some products to your cart to see them here.</p>
+                        <Link href="/">
+                            <Button variant="success">Continue Shopping</Button>
+                        </Link>
+                    </div>
+                ) : (
+                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                        {/* Cart Items */}
+                        <div className="lg:col-span-2">
+                            <div className="space-y-4">
+                                {cartItems.map((item) => (
+                                    <div key={item.id} className="flex items-center gap-4 p-4 border border-gray-200 rounded-2xl">
+                                        <div className="relative w-20 h-20 bg-gray-50 rounded-xl flex items-center justify-center">
                                             <Image
-                                                src={item.image}
-                                                alt={item.title}
+                                                src={item.main_img_url}
+                                                alt={item.name}
                                                 width={60}
                                                 height={60}
                                                 className="object-contain"
                                             />
                                         </div>
+
                                         <div className="flex-1">
-                                            <h3 className="font-semibold text-gray-800 text-sm leading-tight mb-1">
-                                                {item.title}
-                                            </h3>
-                                            <div className="text-xs text-gray-500 space-y-1">
-                                                {item.color && <div>Color: {item.color}</div>}
-                                                {item.memory && <div>Memory: {item.memory}</div>}
-                                            </div>
-                                            <div className="flex items-center gap-2 mt-2">
-                                                {item.inStock ? (
-                                                    <div className="flex items-center gap-1 text-xs text-[#1ABA1A]">
-                                                        <div className="w-2 h-2 bg-[#1ABA1A] rounded-full"></div>
-                                                        In Stock
-                                                    </div>
-                                                ) : (
-                                                    <div className="text-xs text-red-500">Out of Stock</div>
-                                                )}
-                                            </div>
+                                            <Link href={`/product/${item.slug}`}>
+                                                <h3 className="font-semibold text-lg hover:text-[#1ABA1A] transition cursor-pointer">
+                                                    {item.name}
+                                                </h3>
+                                            </Link>
+                                            <p className="text-gray-600 text-sm">SKU: {item.sku}</p>
+                                            <p className="text-[#1ABA1A] font-bold text-lg">${item.price}</p>
                                         </div>
-                                    </div>
 
-                                    <div className="col-span-4 md:col-span-2 flex md:justify-center">
-                                        <div className="text-sm font-semibold">
-                                            ${item.price.toFixed(2)}
-                                            {item.originalPrice && (
-                                                <div className="text-xs text-gray-500 line-through">
-                                                    ${item.originalPrice.toFixed(2)}
-                                                </div>
-                                            )}
-                                        </div>
-                                    </div>
+                                        <div className="flex items-center gap-3">
+                                            <div className="flex items-center gap-2">
+                                                <button
+                                                    onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                                                    className="w-8 h-8 rounded-full bg-white border border-gray-300 flex items-center justify-center hover:bg-gray-100 transition font-semibold"
+                                                >
+                                                    <FaMinus className="text-xs" />
+                                                </button>
+                                                <span className="w-8 text-center font-semibold">{item.quantity}</span>
+                                                <button
+                                                    onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                                                    className="w-8 h-8 rounded-full bg-white border border-gray-300 flex items-center justify-center hover:bg-gray-100 transition font-semibold"
+                                                >
+                                                    <FaPlus className="text-xs" />
+                                                </button>
+                                            </div>
 
-                                    <div className="col-span-4 md:col-span-3 flex md:justify-center">
-                                        <div className="flex items-center gap-2">
-                                            <button className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200 transition text-sm font-semibold">
-                                                -
-                                            </button>
-                                            <span className="w-8 text-center text-sm font-semibold">{item.quantity}</span>
-                                            <button className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200 transition text-sm font-semibold">
-                                                +
+                                            <button
+                                                onClick={() => removeItem(item.id)}
+                                                className="text-red-500 hover:text-red-700 transition ml-4 p-2 rounded-full hover:bg-red-50"
+                                                title="Remove item"
+                                            >
+                                                <FaTrash />
                                             </button>
                                         </div>
                                     </div>
-
-                                    <div className="col-span-4 md:col-span-2 flex items-center justify-between md:justify-center">
-                                        <div className="text-sm font-bold">
-                                            ${(item.price * item.quantity).toFixed(2)}
-                                        </div>
-                                        <button className="text-gray-400 hover:text-red-500 transition md:ml-4">
-                                            <RiDeleteBin6Line size={18} />
-                                        </button>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-
-                        <div className="mt-6">
-                            <Link href="/shop" className="flex items-center gap-2 text-[#1ABA1A] font-semibold text-sm hover:underline">
-                                <IoIosArrowForward className="rotate-180" />
-                                Continue Shopping
-                            </Link>
-                        </div>
-                    </div>
-
-                    <div className="lg:col-span-1">
-                        <div className="bg-gray-50 rounded-2xl p-6 border border-black/10">
-                            <h2 className="text-lg font-bold mb-4">ORDER SUMMARY</h2>
-
-                            <div className="space-y-3 text-sm">
-                                <div className="flex justify-between">
-                                    <span className="text-gray-600">Subtotal</span>
-                                    <span className="font-semibold">${subtotal.toFixed(2)}</span>
-                                </div>
-                                <div className="flex justify-between">
-                                    <span className="text-gray-600">Shipping</span>
-                                    <span className="font-semibold">
-                                        {shipping === 0 ? (
-                                            <span className="text-[#1ABA1A]">FREE</span>
-                                        ) : (
-                                            `$${shipping.toFixed(2)}`
-                                        )}
-                                    </span>
-                                </div>
-                                <div className="flex justify-between">
-                                    <span className="text-gray-600">Tax</span>
-                                    <span className="font-semibold">${tax.toFixed(2)}</span>
-                                </div>
-                                <div className="border-t border-gray-200 pt-3 mt-3">
-                                    <div className="flex justify-between text-base font-bold">
-                                        <span>Total</span>
-                                        <span className="text-[#1ABA1A]">${total.toFixed(2)}</span>
-                                    </div>
-                                </div>
+                                ))}
                             </div>
+                        </div>
 
-                            {subtotal < 199 && (
-                                <div className="mt-4 p-3 bg-green-50 rounded-lg border border-green-200">
-                                    <div className="text-xs text-green-800 font-semibold mb-1">
-                                        Add ${(199 - subtotal).toFixed(2)} more for FREE shipping!
+                        {/* Order Summary */}
+                        <div className="lg:col-span-1">
+                            <div className="bg-gray-50 rounded-2xl p-6 border border-black/10">
+                                <h3 className="text-xl font-semibold mb-4">Order Summary</h3>
+
+                                <div className="space-y-3 mb-6">
+                                    <div className="flex justify-between">
+                                        <span>Items ({getTotalItems()}):</span>
+                                        <span>${getTotalPrice().toFixed(2)}</span>
                                     </div>
-                                    <div className="w-full bg-gray-200 rounded-full h-2">
-                                        <div 
-                                            className="bg-[#1ABA1A] h-2 rounded-full" 
-                                            style={{ width: `${(subtotal / 199) * 100}%` }}
-                                        ></div>
+                                    <div className="flex justify-between">
+                                        <span>Shipping:</span>
+                                        <span className="text-[#1ABA1A]">FREE</span>
+                                    </div>
+                                    <div className="flex justify-between text-lg font-semibold border-t pt-3">
+                                        <span>Total:</span>
+                                        <span className="text-[#1ABA1A]">${getTotalPrice().toFixed(2)}</span>
                                     </div>
                                 </div>
-                            )}
 
-                            <Button variant="success" size="lg" className="w-full mt-6 py-3 font-semibold" routeTo='/checkout'>
-                                PROCEED TO CHECKOUT
-                            </Button>
+                                <Button variant="success" size="lg" className="w-full py-3 mb-3" routeTo='/checkout'>
+                                    PROCEED TO CHECKOUT
+                                </Button>
 
-                            <Button variant="outline" className="w-full mt-3 py-3 font-semibold border-yellow-400 bg-yellow-400 hover:bg-yellow-500 text-black">
-                                CHECKOUT WITH PAYPAL
-                            </Button>
+                                <Button variant="outline" size="lg" className="w-full py-3" routeTo='/shop'>
+                                    CONTINUE SHOPPING
+                                </Button>
 
-                            <div className="mt-6 text-center">
-                                <div className="text-xs text-gray-500 font-semibold mb-3">
+                                <div className="text-xs text-[#999999] mt-4 text-center font-semibold">
                                     Guaranteed Safe Checkout
                                 </div>
-                                <div className="flex justify-center gap-2">
-                                    {[1, 2, 3, 4].map((item) => (
-                                        <div key={item} className="w-10 h-6 bg-gray-200 rounded flex items-center justify-center">
-                                            <span className="text-xs font-semibold text-gray-500">Pay</span>
-                                        </div>
-                                    ))}
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="bg-gray-50 rounded-2xl p-6 mt-6 border border-black/10 text-center">
-                            <div className="font-semibold text-gray-800 mb-2">Need Help?</div>
-                            <div className="text-xl font-bold text-[#1ABA1A]">(025) 3886 25 16</div>
-                            <div className="text-sm text-gray-500 mt-2">
-                                24/7 Customer Support
                             </div>
                         </div>
                     </div>
-                </div>
+                )}
             </div>
         </div>
-    )
+    );
 }

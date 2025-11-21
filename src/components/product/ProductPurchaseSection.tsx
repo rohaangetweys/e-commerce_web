@@ -1,6 +1,8 @@
 'use client'
 import { useState } from 'react';
 import Button from "@/components/common/Button";
+import { useRouter } from 'next/navigation';
+import toast from 'react-hot-toast';
 
 interface ProductPurchaseSectionProps {
     product: any;
@@ -8,7 +10,42 @@ interface ProductPurchaseSectionProps {
 
 export default function ProductPurchaseSection({ product }: ProductPurchaseSectionProps) {
     const [qty, setQty] = useState(1);
+    const router = useRouter();
     const total = product.price * qty;
+
+    const addToCart = () => {
+        // Get existing cart from localStorage
+        const existingCart = JSON.parse(localStorage.getItem('cart') || '[]');
+        
+        // Check if product already exists in cart
+        const existingItemIndex = existingCart.findIndex((item: any) => item.id === product.id);
+        
+        if (existingItemIndex > -1) {
+            // Update quantity if product exists
+            existingCart[existingItemIndex].quantity += qty;
+            toast.success(`Updated quantity of ${product.name} in cart!`);
+        } else {
+            // Add new item to cart
+            const cartItem = {
+                id: product.id,
+                name: product.name,
+                price: product.price,
+                main_img_url: product.main_img_url,
+                slug: product.slug,
+                quantity: qty,
+                sku: product.sku
+            };
+            existingCart.push(cartItem);
+            toast.success(`${product.name} added to cart!`);
+        }
+        
+        // Save back to localStorage
+        localStorage.setItem('cart', JSON.stringify(existingCart));
+    };
+
+    const goToCart = () => {
+        router.push('/cart');
+    };
 
     return (
         <div className="lg:col-span-1">
@@ -33,8 +70,22 @@ export default function ProductPurchaseSection({ product }: ProductPurchaseSecti
                 </div>
 
                 <div className="space-y-3 mt-6">
-                    <Button variant="success" size="lg" className="w-full py-3 text-base font-semibold">
+                    <Button 
+                        variant="success" 
+                        size="lg" 
+                        className="w-full py-3 text-base font-semibold"
+                        onClick={addToCart}
+                    >
                         ADD TO CART
+                    </Button>
+
+                    <Button 
+                        variant="outline" 
+                        size="lg" 
+                        className="w-full py-3 text-base font-semibold border-yellow-400 bg-yellow-400 hover:bg-yellow-500 text-black"
+                        onClick={goToCart}
+                    >
+                        VIEW CART
                     </Button>
 
                     <Button variant="outline" size="lg" className="w-full py-3 text-base font-semibold border-yellow-400 bg-yellow-400 hover:bg-yellow-500 text-black">
