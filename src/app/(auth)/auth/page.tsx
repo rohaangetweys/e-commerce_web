@@ -59,7 +59,6 @@ export default function AuthPage() {
         }
 
         try {
-            // Create auth user
             const { data: authData, error: authError } = await supabase.auth.signUp({
                 email: formData.email,
                 password: formData.password,
@@ -68,7 +67,6 @@ export default function AuthPage() {
             if (authError) throw authError;
 
             if (authData.user) {
-                // Create user profile in users table
                 const { error: profileError } = await supabase
                     .from('users')
                     .insert([

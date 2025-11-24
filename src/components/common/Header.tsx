@@ -32,7 +32,6 @@ export default function Header({ isAuthPage }: { isAuthPage?: boolean }) {
                 setUser(user);
 
                 if (user) {
-                    // Fetch user profile from users table to get full name
                     const { data: profile, error } = await supabase
                         .from('users')
                         .select('full_name')
@@ -52,12 +51,10 @@ export default function Header({ isAuthPage }: { isAuthPage?: boolean }) {
 
         getUserData();
 
-        // Listen for auth state changes
         const { data: { subscription } } = supabase.auth.onAuthStateChange(async (_event, session) => {
             setUser(session?.user || null);
 
             if (session?.user) {
-                // Fetch user profile when user logs in
                 const { data: profile, error } = await supabase
                     .from('users')
                     .select('full_name')

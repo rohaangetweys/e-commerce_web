@@ -31,7 +31,6 @@ export default function ShopFilters({
             params.set(name, value)
         }
 
-        // Reset to page 1 when changing filters
         if (name !== 'page') {
             params.delete('page')
         }

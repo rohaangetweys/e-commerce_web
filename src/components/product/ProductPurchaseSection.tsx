@@ -14,18 +14,14 @@ export default function ProductPurchaseSection({ product }: ProductPurchaseSecti
     const total = product.price * qty;
 
     const addToCart = () => {
-        // Get existing cart from localStorage
         const existingCart = JSON.parse(localStorage.getItem('cart') || '[]');
         
-        // Check if product already exists in cart
         const existingItemIndex = existingCart.findIndex((item: any) => item.id === product.id);
         
         if (existingItemIndex > -1) {
-            // Update quantity if product exists
             existingCart[existingItemIndex].quantity += qty;
             toast.success(`Updated quantity of ${product.name} in cart!`);
         } else {
-            // Add new item to cart
             const cartItem = {
                 id: product.id,
                 name: product.name,
@@ -39,7 +35,6 @@ export default function ProductPurchaseSection({ product }: ProductPurchaseSecti
             toast.success(`${product.name} added to cart!`);
         }
         
-        // Save back to localStorage
         localStorage.setItem('cart', JSON.stringify(existingCart));
     };
 
@@ -86,10 +81,6 @@ export default function ProductPurchaseSection({ product }: ProductPurchaseSecti
                         onClick={goToCart}
                     >
                         VIEW CART
-                    </Button>
-
-                    <Button variant="outline" size="lg" className="w-full py-3 text-base font-semibold border-yellow-400 bg-yellow-400 hover:bg-yellow-500 text-black">
-                        BUY WITH PAYPAL
                     </Button>
                 </div>
 

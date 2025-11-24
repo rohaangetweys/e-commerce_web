@@ -51,27 +51,18 @@ export interface CreateOrderData {
     tax: number;
     total: number;
     items: OrderItem[];
-    user_id?: string;
+    user_id: string;
 }
 
 export const ordersService = {
     async createOrder(orderData: CreateOrderData) {
         const supabase = createClient();
         
-        // Get current session to ensure we have user info
-        const { data: { session } } = await supabase.auth.getSession();
-        
-        // Include user_id in the order data
-        const orderWithUser = {
-            ...orderData,
-            user_id: session?.user?.id || orderData.user_id
-        };
-
-        console.log('Creating order with user_id:', orderWithUser.user_id);
+        console.log('Creating order with user_id:', orderData.user_id);
 
         const { data, error } = await supabase
             .from('orders')
-            .insert([orderWithUser])
+            .insert([orderData])
             .select()
             .single();
 
