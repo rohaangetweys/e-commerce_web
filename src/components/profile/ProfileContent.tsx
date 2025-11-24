@@ -283,13 +283,12 @@ export default function ProfileContent({ user, profile, orders }: ProfileContent
                                                 <div className="space-y-3">
                                                     {order.items?.slice(0, 2).map((item: any, index: number) => (
                                                         <div key={index} className="flex items-center gap-3">
-                                                            <div className="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center border">
+                                                            <div className="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center border relative overflow-hidden">
                                                                 <Image
                                                                     src={item.main_img_url}
                                                                     alt={item.name}
-                                                                    width={40}
-                                                                    height={40}
-                                                                    className="object-contain"
+                                                                    fill
+                                                                    className="object-cover"
                                                                 />
                                                             </div>
                                                             <div className="flex-1 min-w-0">

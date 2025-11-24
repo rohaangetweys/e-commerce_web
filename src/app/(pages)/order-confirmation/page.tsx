@@ -3,7 +3,14 @@ import SearchSection from '@/components/common/SearchSection'
 import Banner from '@/components/common/Banner'
 import OrderConfirmationContent from '@/components/checkout/OrderConfirmationContent'
 
-export default function OrderConfirmationPage() {
+interface PageProps {
+    searchParams: Promise<{ [key: string]: string | string[] | undefined }>
+}
+
+export default async function OrderConfirmationPage({ searchParams }: PageProps) {
+    const params = await searchParams
+    const orderId = params.orderId as string
+
     return (
         <div className="h-full w-full bg-transparent text-black">
             <SearchSection />
@@ -13,7 +20,7 @@ export default function OrderConfirmationPage() {
                     <div className="text-lg">Loading order confirmation...</div>
                 </div>
             }>
-                <OrderConfirmationContent />
+                <OrderConfirmationContent orderId={orderId} />
             </Suspense>
         </div>
     )
