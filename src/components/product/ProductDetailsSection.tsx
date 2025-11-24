@@ -7,11 +7,6 @@ export default function ProductDetailsSection({ product }: { product: any }) {
 
     return (
         <div className="lg:col-span-1 flex flex-col gap-6">
-            <div className="flex items-center gap-2 text-sm text-[#999999] font-semibold">
-                <span>★★★★★</span>
-                <span>(5 Reviews)</span>
-            </div>
-
             <h1 className="text-2xl font-semibold leading-tight">
                 {product.name}
             </h1>

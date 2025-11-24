@@ -83,7 +83,7 @@ export default function Header({ isAuthPage }: { isAuthPage?: boolean }) {
     const displayName = userProfile?.full_name || user?.email || 'User';
 
     return (
-        <header className='h-[82px] w-full bg-white flex flex-col justify-center items-center py-4 fixed top-0 z-50'>
+        <header className="h-[82px] shadow-lg w-full bg-white flex flex-col justify-center items-center py-4 fixed top-0 z-50">
             <div className='h-[50px] px-6 flex justify-between items-center max-w-screen-2xl w-full'>
                 <div className='flex items-center'>
                     <div className="text-white w-10 h-10 flex justify-center items-center bg-[#1ABA1A] rounded-2xl">
