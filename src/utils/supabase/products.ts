@@ -25,7 +25,6 @@ export interface Product {
     created_at: string;
     updated_at: string;
 
-    // Joined data
     category?: {
         name: string;
     };
