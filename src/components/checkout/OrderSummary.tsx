@@ -42,13 +42,12 @@ export default function OrderSummary({
                 <div className="space-y-3 mb-4 max-h-80 overflow-y-auto">
                     {cartItems.map((item) => (
                         <div key={item.id} className="flex gap-3 py-2">
-                            <div className="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center border">
+                            <div className="w-12 h-12 bg-gray-100 overflow-hidden rounded-lg flex items-center justify-center border relative">
                                 <Image
                                     src={item.main_img_url}
                                     alt={item.name}
-                                    width={40}
-                                    height={40}
-                                    className="object-contain"
+                                    fill
+                                    className="object-cover"
                                 />
                             </div>
                             <div className="flex-1 min-w-0">

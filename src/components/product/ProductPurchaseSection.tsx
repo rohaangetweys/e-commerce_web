@@ -6,33 +6,60 @@ import toast from 'react-hot-toast';
 
 interface ProductPurchaseSectionProps {
     product: any;
+    selectedVariant1: string;
+    selectedVariant2: string;
+    onVariant1Change: (variant: string) => void;
+    onVariant2Change: (variant: string) => void;
 }
 
-export default function ProductPurchaseSection({ product }: ProductPurchaseSectionProps) {
+export default function ProductPurchaseSection({ 
+    product, 
+    selectedVariant1, 
+    selectedVariant2, 
+    onVariant1Change, 
+    onVariant2Change 
+}: ProductPurchaseSectionProps) {
     const [qty, setQty] = useState(1);
     const router = useRouter();
-    const total = product.price * qty;
+
+    const getCurrentPrice = () => {
+        if (selectedVariant1 && product.variant_prices?.[selectedVariant1]) {
+            return product.variant_prices[selectedVariant1];
+        }
+        return product.price;
+    };
+
+    const currentPrice = getCurrentPrice();
+    const total = currentPrice * qty;
 
     const addToCart = () => {
         const existingCart = JSON.parse(localStorage.getItem('cart') || '[]');
         
-        const existingItemIndex = existingCart.findIndex((item: any) => item.id === product.id);
+        const variantString = `${selectedVariant1}${selectedVariant2 ? `-${selectedVariant2}` : ''}`;
+        const cartItemId = `${product.id}-${variantString}`;
+        
+        const existingItemIndex = existingCart.findIndex((item: any) => item.id === cartItemId);
         
         if (existingItemIndex > -1) {
             existingCart[existingItemIndex].quantity += qty;
-            toast.success(`Updated quantity of ${product.name} in cart!`);
+            toast.success(`Updated quantity in cart!`);
         } else {
             const cartItem = {
-                id: product.id,
+                id: cartItemId,
+                productId: product.id,
                 name: product.name,
-                price: product.price,
+                price: currentPrice,
                 main_img_url: product.main_img_url,
                 slug: product.slug,
                 quantity: qty,
-                sku: product.sku
+                sku: product.sku,
+                variant1: selectedVariant1,
+                variant2: selectedVariant2,
+                variant1Name: product.variant_type1_name,
+                variant2Name: product.variant_type2_name
             };
             existingCart.push(cartItem);
-            toast.success(`${product.name} added to cart!`);
+            toast.success(`Added to cart!`);
         }
         
         localStorage.setItem('cart', JSON.stringify(existingCart));
@@ -48,10 +75,57 @@ export default function ProductPurchaseSection({ product }: ProductPurchaseSecti
                 <div className="text-[#999999] text-sm mb-2 font-semibold">TOTAL PRICE:</div>
                 <div className="text-3xl font-bold text-[#1ABA1A]">${total.toFixed(2)}</div>
 
+                {product.variant_type1_name && product.variant_type1_options?.length > 0 && (
+                    <div className="mt-4">
+                        <div className="font-semibold mb-2 text-sm text-gray-800">
+                            {product.variant_type1_name}:
+                        </div>
+                        <div className="flex gap-2 flex-wrap">
+                            {product.variant_type1_options.map((option: string) => (
+                                <button
+                                    key={option}
+                                    onClick={() => onVariant1Change(option)}
+                                    className={`px-3 py-1 text-xs border rounded-lg transition ${
+                                        selectedVariant1 === option
+                                            ? "border-[#1ABA1A] bg-green-50 text-[#1ABA1A] font-semibold"
+                                            : "border-gray-300 hover:border-gray-400"
+                                    }`}
+                                >
+                                    {option}
+                                </button>
+                            ))}
+                        </div>
+                    </div>
+                )}
+
+                {product.variant_type2_name && product.variant_type2_options?.length > 0 && (
+                    <div className="mt-3">
+                        <div className="font-semibold mb-2 text-sm text-gray-800">
+                            {product.variant_type2_name}:
+                        </div>
+                        <div className="flex gap-2 flex-wrap">
+                            {product.variant_type2_options.map((option: string) => (
+                                <button
+                                    key={option}
+                                    onClick={() => onVariant2Change(option)}
+                                    className={`px-3 py-1 text-xs border rounded-lg transition ${
+                                        selectedVariant2 === option
+                                            ? "border-[#1ABA1A] bg-green-50 text-[#1ABA1A] font-semibold"
+                                            : "border-gray-300 hover:border-gray-400"
+                                    }`}
+                                >
+                                    {option}
+                                </button>
+                            ))}
+                        </div>
+                    </div>
+                )}
+
                 <div className="flex items-center gap-5 mt-6">
                     <button
                         onClick={() => qty > 1 && setQty(qty - 1)}
                         className="w-10 h-10 rounded-full bg-white border border-gray-300 flex items-center justify-center hover:bg-gray-100 transition font-semibold"
+                        disabled={qty <= 1}
                     >
                         -
                     </button>

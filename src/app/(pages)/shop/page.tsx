@@ -77,7 +77,7 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
 
                 <div className="
                     flex flex-wrap w-full gap-y-6 justify-between
-                    max-[1000px]:justify-center max-[1000px]:gap-x-4
+                    max-[1000px]:justify-center max-[1000px]:gap-x-4 max-sm:gap-x-0
                 ">
                     {productsToShow.map((product) => (
                         <ProductCard

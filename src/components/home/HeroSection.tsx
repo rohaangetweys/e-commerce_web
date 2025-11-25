@@ -20,7 +20,7 @@ export default async function HeroSection() {
                         <div key={category.id} className="mt-4">
                             <Link
                                 href={`/shop?category=${encodeURIComponent(category.slug)}`}
-                                className={`text-sm text-black ${index <= 2 ? "hover:text-[#F1352B] cursor-pointer" : "cursor-default"}`}
+                                className="text-sm text-black hover:text-[#F1352B] cursor-pointer"
                             >
                                 {category.name}
                             </Link>

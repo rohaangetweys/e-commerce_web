@@ -147,9 +147,7 @@ export default function CartContent({ user }: CartContentProps) {
                             >
                                 Continue Shopping
                             </Button>
-                            <Link href="/">
-                                <Button variant="success">Browse Products</Button>
-                            </Link>
+                            <Button routeTo='/shop' variant="success">Browse Products</Button>
                         </div>
                     </div>
                 ) : (
