@@ -6,9 +6,10 @@ import { IoIosArrowForward } from 'react-icons/io'
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import toast from 'react-hot-toast'
-import { ordersService, CreateOrderData } from '@/utils/supabase/orders'
 import CheckoutForm from './CheckoutForm'
 import OrderSummary from './OrderSummary'
+import { createOrder, CreateOrderData } from '@/actions/orders'
+
 
 interface CartItem {
     id: string;
@@ -58,6 +59,8 @@ export default function CheckoutContent({ user }: CheckoutContentProps) {
     })
 
     const loadCartData = () => {
+        if (typeof window === 'undefined') return []
+        
         const cart = JSON.parse(localStorage.getItem('cart') || '[]')
         setCartItems(cart)
         return cart
@@ -85,7 +88,7 @@ export default function CheckoutContent({ user }: CheckoutContentProps) {
         const updatedFormData = { ...formData, [field]: value }
         setFormData(updatedFormData)
 
-        if (saveInfo) {
+        if (saveInfo && typeof window !== 'undefined') {
             localStorage.setItem('checkout-form-data', JSON.stringify(updatedFormData))
         }
     }
@@ -126,11 +129,13 @@ export default function CheckoutContent({ user }: CheckoutContentProps) {
 
             console.log('Placing order with data:', orderData);
 
-            const order = await ordersService.createOrder(orderData);
+            const order = await createOrder(orderData);
             console.log('Order created:', order);
 
-            localStorage.setItem('cart', '[]');
-            localStorage.removeItem('checkout-form-data');
+            if (typeof window !== 'undefined') {
+                localStorage.setItem('cart', '[]');
+                localStorage.removeItem('checkout-form-data');
+            }
 
             toast.success(`Order #${order.id.slice(0, 8).toUpperCase()} placed successfully!`);
 
